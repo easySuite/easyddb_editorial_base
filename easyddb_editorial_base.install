@@ -10,6 +10,8 @@
 function easyddb_editorial_base_install() {
   _easyddb_editorial_base_create_base();
   _easyddb_editorial_base_create_fields();
+
+  variable_set('editorial_base_content_types', array());
 }
 
 /**
