@@ -1,0 +1,48 @@
+<?php
+/**
+ * @file
+ * Editorial dashboard module.
+ *
+ * Provides integration with editorial base system.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function easyddb_editorial_base_menu() {
+  $menu = array();
+
+  $menu['admin/config/edbase'] = array(
+    'title' => 'Editorial Base',
+    'description' => 'Editorial Base settings',
+    'access arguments' => array('administer editorial base'),
+    'page callback' => 'easyddb_editorial_base_admin_menu_block_page',
+    'page arguments' => array(),
+    'file' => 'easyddb_editorial_base.admin.inc',
+  );
+
+  $menu['admin/config/edbase/content'] = array(
+    'title' => 'Content types',
+    'description' => 'Node bundles that are a part of editorial base system',
+    'access arguments' => array('administer editorial base'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('easyddb_editorial_base_admin_content_types'),
+    'file' => 'easyddb_editorial_base.admin.inc',
+  );
+
+  return $menu;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function easyddb_editorial_base_permission() {
+  $perm = array();
+
+  $perm['administer editorial base'] = array(
+    'title' => 'Administer editorial base',
+    'description' => 'Change various editorial base settings'
+  );
+
+  return $perm;
+}
