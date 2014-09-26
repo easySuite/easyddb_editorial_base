@@ -46,3 +46,26 @@ function easyddb_editorial_base_permission() {
 
   return $perm;
 }
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Alter taxonomy term (section) form.
+ */
+function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_state) {
+  if ($form['#bundle'] != 'editorial_base') {
+    return;
+  }
+
+  $form['section_tabs'] = array(
+    '#type' => 'vertical_tabs'
+  );
+
+  $tabs = module_invoke_all('section_tabs');
+
+  if (is_array($tabs)) {
+    $form += $tabs;
+  }
+
+  $form['relations']['#group'] = 'section_tabs';
+}
