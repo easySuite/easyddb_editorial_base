@@ -24,7 +24,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     'customized' => 0,
     'parent_depth_limit' => 8,
   );
-  if ($form['#term']['tid'] != null) {
+  if (!empty($form['#term']['tid'])) {
     // Check if term already have menu.
     $mlid = _easyddb_editorial_base_menu_exist($form['#term']['tid']);
     if ($mlid) {
@@ -128,7 +128,7 @@ function easyddb_editorial_base_term_validate($form, &$form_state) {
     $menu_vals = $form_state['values']['menu'];
     foreach ($menu_parameters as $parameter => $parameter_name) {
       if (empty($menu_vals[$parameter])) {
-        form_set_error($parameter, t($parameter_name . ' not set.'));
+        form_set_error($parameter, t('@parameter_name not set.', array('@parameter_name' => $parameter_name)));
       }
     }
   }
