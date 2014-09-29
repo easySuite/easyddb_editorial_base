@@ -27,3 +27,27 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
     }
   }
 }
+
+/**
+ * Implements hook_section_tabs().
+ *
+ */
+function easyddb_editorial_base_header_image_section_tabs() {
+ $tabs = array();
+
+ $tabs['header_image'] = array(
+ '#type' => 'fieldset',
+ '#title' => t('Header image'),
+ '#group' => 'section_tabs',
+ );
+
+ $tabs['header_image']['example_element'] = array(
+ '#type' => 'checkbox',
+ '#title' => t('Example checkbox in a tab'),
+ '#default_value' => variable_get('example_element', 0),
+ );
+
+ return $tabs;
+}
+
+
