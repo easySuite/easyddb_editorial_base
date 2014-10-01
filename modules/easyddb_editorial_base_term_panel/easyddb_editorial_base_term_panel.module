@@ -43,20 +43,51 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
 
     $term_page = field_get_items('taxonomy_term', $term, 'field_term_page');
     $term_page_old = field_get_items('taxonomy_term', $term->original, 'field_term_page');
-    error_reporting(E_ALL);
-    ini_set("display_errors", 1);
+    // When unchecked.
     if (($term_page[0]['value'] - $term_page_old[0]['value']) == -1) {
+      // Get page.
+      $page = 'term_view';
+      $page = page_manager_get_page_cache($page);
+      // @see page_manager.admin.inc
+      $page->handler_info['term_view_panel_context_tid_' . $term->tid]['disabled'] = TRUE;
+      $page->handler_info['term_view_panel_context_tid_' . $term->tid]['changed'] |= PAGE_MANAGER_CHANGED_STATUS;
+
+      if ($function = ctools_plugin_get_function($page->subtask, 'enable callback')) {
+        $result = $function($page, FALSE);
+        menu_rebuild();
+        page_manager_save_page_cache($page);
+      }
+    }
+    //When checked
+    elseif (($term_page[0]['value'] - $term_page_old[0]['value']) == 1) {
+
+      // We have 2 variants:
+      // 1) hanlder existsm then just enable him;
+      // 2) we should create new variant.
       $page = 'term_view';
       $task = page_manager_get_task($page);
       ctools_get_plugins('page_manager', 'task_handlers', 'panel_context');
-      $handlers = page_manager_load_sorted_handlers($task, '', TRUE);
+      $handlers = page_manager_load_sorted_handlers($task, '', FALSE);
       $handler_name = 'term_view_panel_context_tid_' . $term->tid;
       $handler = isset($handlers[$handler_name]) ? $handlers[$handler_name] : NULL;
-      $handler->disabled = TRUE;
-      page_manager_save_task_handler($handler);
-    }
-    elseif (($term_page[0]['value'] - $term_page_old[0]['value']) == 1) {
-      easyddb_editorial_base_term_panel_create_term_variant($term);
+
+      // Enable handler.
+      if (!empty($handler)) {
+        $page = 'term_view';
+        $page = page_manager_get_page_cache($page);
+        $page->handler_info['term_view_panel_context_tid_' . $term->tid]['disabled'] = FALSE;
+        $page->handler_info['term_view_panel_context_tid_' . $term->tid]['changed'] |= PAGE_MANAGER_CHANGED_STATUS;
+
+        if ($function = ctools_plugin_get_function($page->subtask, 'enable callback')) {
+          $result = $function($page, FALSE);
+          menu_rebuild();
+          page_manager_save_page_cache($page);
+        }
+      }
+      // Create new handler.
+      else{
+        easyddb_editorial_base_term_panel_create_term_variant($term);
+      }
     }
   }
 }
