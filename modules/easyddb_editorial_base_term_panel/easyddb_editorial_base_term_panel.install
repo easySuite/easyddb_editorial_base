@@ -64,7 +64,7 @@ function easyddb_editorial_base_term_panel_install() {
       'active' => 1,
       'module' => 'options',
       'settings' => array(
-        'display_label' => 0,
+        'display_label' => 1,
       ),
       'type' => 'options_onoff',
       'weight' => 32,
