@@ -7,7 +7,7 @@
 function easyddb_editorial_base_admin_term_panel($form, $form_state) {
 
   $form = array();
-  // Gets list of handlers for term_viev.
+  // Gets list of handlers for term_view.
   $page = 'term_view';
   $task = page_manager_get_task($page);
   ctools_get_plugins('page_manager', 'task_handlers', 'panel_context');

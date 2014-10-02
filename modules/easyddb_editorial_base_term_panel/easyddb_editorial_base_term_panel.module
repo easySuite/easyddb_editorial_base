@@ -40,7 +40,6 @@ function easyddb_editorial_base_term_panel_taxonomy_term_insert($term) {
  */
 function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
   if ($term->vocabulary_machine_name == 'editorial_base') {
-
     $term_page = field_get_items('taxonomy_term', $term, 'field_term_page');
     $term_page_old = field_get_items('taxonomy_term', $term->original, 'field_term_page');
     // When unchecked.

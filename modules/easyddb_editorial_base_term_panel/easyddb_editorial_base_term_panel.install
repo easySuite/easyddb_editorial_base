@@ -46,7 +46,7 @@ function easyddb_editorial_base_term_panel_install() {
     'description' => 'Create a term page',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
