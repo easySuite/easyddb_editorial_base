@@ -55,3 +55,28 @@ function easyddb_editorial_base_og_integration_form_alter(&$form, &$form_state, 
     drupal_add_js($js_file, 'file');
   }
 }
+
+/**
+ * Implements hook_page_alter().
+ *
+ * Remove the IPE bottom panel for roles whose group does not match the
+ * entity group.
+ */
+function easyddb_editorial_base_og_integration_page_alter(&$page) {
+  if (arg(0) != 'taxonomy') {
+    return FALSE;
+  }
+
+  $item = menu_get_object('taxonomy_term', 2, $_GET['q']);
+  if (isset($item->vocabulary_machine_name) && $item->vocabulary_machine_name == 'editorial_base') {
+    global $user;
+    $groups = og_get_groups_by_user($user);
+    $node_groups = isset($groups['node']) ? $groups['node'] : NULL;
+    $term_in_og = $item->og_user_node[LANGUAGE_NONE][0]['target_id'];
+
+    if (is_array($node_groups) && !in_array($term_in_og, $node_groups)) {
+      $css_file = drupal_get_path('module', 'easyddb_editorial_base_og_integration') . '/css/easyddb_editorial_base_og_integration.css';
+      drupal_add_css($css_file, 'file');
+    }
+  }
+}
