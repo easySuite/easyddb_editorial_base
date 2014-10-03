@@ -71,6 +71,92 @@ function easyddb_editorial_base_term_panel_install() {
     ),
   );
   field_create_instance($instance);
+
+    $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'term_view_panel_context_4';
+  $handler->task = 'term_view';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = 4;
+  $handler->conf = array(
+    'title' => 'Editorial base term panel',
+    'no_blocks' => 0,
+    'pipeline' => 'ipe',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'entity_bundle:taxonomy_term',
+          'settings' => array(
+            'type' => array(
+              'editorial_base' => 'editorial_base',
+            ),
+          ),
+          'context' => 'argument_term_1',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-1';
+    $pane->panel = 'main_content';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'tags_list-ding_content_tags';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => array(
+        0 => 'argument_term_1',
+      ),
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-1'] = $pane;
+    $display->panels['main_content'][0] = 'new-1';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  page_manager_save_task_handler($handler);
 }
 
 /**

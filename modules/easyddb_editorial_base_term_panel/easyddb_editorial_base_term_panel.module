@@ -50,7 +50,6 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
       // @see page_manager.admin.inc
       $page->handler_info['term_view_panel_context_tid_' . $term->tid]['disabled'] = TRUE;
       $page->handler_info['term_view_panel_context_tid_' . $term->tid]['changed'] |= PAGE_MANAGER_CHANGED_STATUS;
-
       if ($function = ctools_plugin_get_function($page->subtask, 'enable callback')) {
         $result = $function($page, FALSE);
         menu_rebuild();
@@ -61,7 +60,7 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
     elseif (($term_page[0]['value'] - $term_page_old[0]['value']) == 1) {
 
       // We have 2 variants:
-      // 1) hanlder existsm then just enable him;
+      // 1) hanlder exists then just enable him;
       // 2) we should create new variant.
       $page = 'term_view';
       $task = page_manager_get_task($page);
@@ -69,7 +68,6 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
       $handlers = page_manager_load_sorted_handlers($task, '', FALSE);
       $handler_name = 'term_view_panel_context_tid_' . $term->tid;
       $handler = isset($handlers[$handler_name]) ? $handlers[$handler_name] : NULL;
-
       // Enable handler.
       if (!empty($handler)) {
         $page = 'term_view';
@@ -90,7 +88,6 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
     }
   }
 }
-
 /**
  * Create a panel variant based on the node created.
  */
@@ -99,47 +96,45 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
     return FALSE;
   }
 
+  $handler_name = variable_get('editorial_base_term_panel_handler', 'term_view_panel_context_4');
+  if (empty($handler_name)) {
+    drupal_set_message(t('Not possible to create term_view variant. Firstly, you should choose @handler', array('@handler' => l('handler', 'admin/config/edbase/term_panel'))), 'warning');
+    return FALSE;
+  }
+
   $page = 'term_view';
   $task = page_manager_get_task($page);
   ctools_get_plugins('page_manager', 'task_handlers', 'panel_context');
 
-  $handlers = page_manager_load_sorted_handlers($task, '', TRUE);
+  $handlers = page_manager_load_sorted_handlers($task, '');
 
-  $handler_name = variable_get('editorial_base_term_panel_handler', 'term_view_panel_context');
   $handler = isset($handlers[$handler_name]) ? $handlers[$handler_name] : NULL;
-
   $tid = $term->tid;
 
   if (empty($handler)) {
     return FALSE;
   }
+  // Normally, panels do not support specific panel to node id mapping, so use
+  // php code instead.
+  $php_code = '$item = menu_get_object(\'taxonomy_term\', 2);if (isset($item->tid) && $item->tid == ' . $tid . ') {return TRUE;}return FALSE;';
 
-  if (!isset($handlers["term_view_panel_context_tid_{$tid}"])) {
-    // Normally, panels do not support specific panel to node id mapping, so use
-    // php code instead.
-    $php_code = '$item = menu_get_object(\'taxonomy_term\', 2);if (isset($item->tid) && $item->tid == ' . $tid . ') {return TRUE;}return FALSE;';
+  $php_filter = array(
+    'name' => 'php',
+    'settings' => array(
+      'description' => t('Term being viewed has tid "@tid"', array('@tid' => $tid)),
+      'php' => $php_code,
+    ),
+    'not' => FALSE,
+  );
 
-    $php_filter = array(
-      'name' => 'php',
-      'settings' => array(
-        'description' => t('Term being viewed has id "@tid"', array('@tid' => $tid)),
-        'php' => $php_code,
-      ),
-      'not' => FALSE,
-    );
-
-    $handler_name = "term_view_panel_context_tid_{$tid}";
-    $variant_title = t('Test (@test)', array('@test' => $term->name));
-    $pipeline = module_exists('panels_ipe') ? 'ipe' : 'standard';
-    $handler->name = $handler_name;
-    $handler->conf['title'] = $variant_title;
-    $handler->conf['pipeline'] = $pipeline;
-    $handler->conf['access']['plugins'][] = $php_filter;
-    $handler->weight = -50;
-  }
-  else {
-    $handler->disabled = FALSE;
-  }
+  $handler_name = "term_view_panel_context_tid_{$tid}";
+  $variant_title = t('Test (@test)', array('@test' => $term->name));
+  $pipeline = module_exists('panels_ipe') ? 'ipe' : 'standard';
+  $handler->name = $handler_name;
+  $handler->conf['title'] = $variant_title;
+  $handler->conf['pipeline'] = $pipeline;
+  $handler->conf['access']['plugins'][] = $php_filter;
+  $handler->weight = -50;
 
   page_manager_save_task_handler($handler);
 }
