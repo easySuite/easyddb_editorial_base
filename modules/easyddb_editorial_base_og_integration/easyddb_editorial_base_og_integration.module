@@ -1,0 +1,82 @@
+<?php
+/**
+ * @file
+ * Code for the Easyddb editorial base og integration feature.
+ */
+
+include_once 'easyddb_editorial_base_og_integration.features.inc';
+
+/**
+ * Implements hook_form_alter().
+ */
+function easyddb_editorial_base_og_integration_form_alter(&$form, &$form_state, $form_id) {
+  $cts = variable_get('editorial_base_content_types', array());
+
+  $eb_cts_form = array();
+  if (!empty($cts)) {
+    foreach ($cts as $ct) {
+      if (!empty($ct)) {
+        $eb_cts_form[] = $ct . '_node_form';
+      }
+    }
+  }
+
+  if (empty($eb_cts_form)) {
+    return FALSE;
+  }
+
+  if (in_array($form_id, $eb_cts_form)) {
+    $user_og_groups = og_get_entity_groups('user');
+    $eb_term_ids = $form['field_editorial_base'][LANGUAGE_NONE]['#options'];
+    unset($eb_term_ids['_none']);
+
+    // Check if user have rights to use terms.
+    $disabled_options = array();
+    foreach ($eb_term_ids as $tid => $term_name) {
+      $term_in_og = og_get_entity_groups('taxonomy_term', $tid);
+      $disabled_options[$tid] = array(
+        'disabled' => TRUE,
+      );
+      foreach ($user_og_groups['node'] as $id => $gid) {
+        if (empty($term_in_og['node'])) {
+          continue;
+        }
+        if ($gid == current($term_in_og['node'])) {
+          $disabled_options[$tid]['disabled'] = FALSE;
+        }
+      }
+    }
+    $disabled_options = array(
+      'easyddb_editorial_base_og' => $disabled_options,
+    );
+
+    $js_file = drupal_get_path('module', 'easyddb_editorial_base_og_integration') . '/js/easyddb_editorial_base_og_int6egretion.js';
+    drupal_add_js($disabled_options, 'setting');
+    drupal_add_js($js_file, 'file');
+  }
+}
+
+/**
+ * Implements hook_page_alter().
+ *
+ * Remove the IPE bottom panel for roles whose group does not match the
+ * entity group.
+ */
+function easyddb_editorial_base_og_integration_page_alter(&$page) {
+  if (arg(0) != 'taxonomy') {
+    return FALSE;
+  }
+
+  $item = menu_get_object('taxonomy_term', 2, $_GET['q']);
+  if (isset($item->vocabulary_machine_name) && $item->vocabulary_machine_name == 'editorial_base') {
+    global $user;
+    $groups = og_get_groups_by_user($user);
+    $node_groups = isset($groups['node']) ? $groups['node'] : NULL;
+    $term_in_og = $item->og_user_node[LANGUAGE_NONE][0]['target_id'];
+
+    if (is_array($node_groups) && !in_array($term_in_og, $node_groups)) {
+      $css_file = drupal_get_path('module', 'easyddb_editorial_base_og_integration') . '/css/easyddb_editorial_base_og_integration.css';
+      drupal_add_css($css_file, 'file');
+    }
+  }
+}
