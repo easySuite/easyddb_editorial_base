@@ -44,26 +44,6 @@ function easyddb_editorial_base_permission() {
     'description' => 'Change various editorial base settings'
   );
 
-  $perm['edit editorialbase terms'] = array(
-    'title' => 'Edit Editorial Base terms',
-    'description' => 'Edit editorial base terms.',
-  );
-
-  $perm['edit own editorialbase terms'] = array(
-    'title' => 'Edit own terms in Editorial Base',
-    'description' => 'Edit editorial base terms created by you.',
-  );
-
-  $perm['delete editorialbase terms'] = array(
-    'title' => 'Delete Editorial Base terms',
-    'description' => 'Delete editorial base terms.',
-  );
-
-  $perm['delete own editorialbase terms'] = array(
-    'title' => 'Delete own Editorial Base terms',
-    'description' => 'Delete own editorial base terms.',
-  );
-
   $perm['view editorialbase panels terms'] = array(
     'title' => 'View Panel for terms',
   );
@@ -90,8 +70,6 @@ function easyddb_editorial_base_secure_permissions($role) {
       'view editorialbase panels terms',
     ),
     'editor' => array(
-      'edit own editorialbase terms',
-      'delete own editorialbase terms',
       'view editorialbase panels terms',
       'use editorialbase panels terms',
     ),
@@ -100,10 +78,6 @@ function easyddb_editorial_base_secure_permissions($role) {
     ),
     'local administrator' => array(
       'administer editorial base',
-      'edit editorialbase terms',
-      'edit own editorialbase terms',
-      'delete editorialbase terms',
-      'delete own editorialbase terms',
       'view editorialbase panels terms',
       'use editorialbase panels terms',
     ),
@@ -120,4 +94,27 @@ function easyddb_editorial_base_secure_permissions($role) {
   if (isset($permissions[$role])) {
     return $permissions[$role];
   }
+}
+
+/*
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Alter taxonomy term (section) form.
+ */
+function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_state) {
+  if ($form['#bundle'] != 'editorial_base') {
+    return;
+  }
+
+  $form['section_tabs'] = array(
+    '#type' => 'vertical_tabs'
+  );
+
+  $tabs = module_invoke_all('section_tabs');
+
+  if (is_array($tabs)) {
+    $form += $tabs;
+  }
+
+  $form['relations']['#group'] = 'section_tabs';
 }

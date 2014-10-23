@@ -63,7 +63,7 @@ function easyddb_editorial_base_admin_content_types_submit($form, $form_state) {
   $node_types = array_filter($input['editorial_base_content_types']);
   $last_setting = array_filter(variable_get('editorial_base_content_types', array()));
 
-  if (count($node_types) == 0) {
+  if (count($node_types) == 0 && empty($last_setting)) {
     return;
   }
 
@@ -125,7 +125,7 @@ function easyddb_editorial_base_admin_content_types_submit($form, $form_state) {
   foreach ($left_over as $entry) {
     $instance = field_read_instance('node', 'field_editorial_base', $entry);
 
-    field_delete_instance($instance);
+    field_delete_instance($instance, FALSE);
 
     $t = array(
       '@instance' => $instance['label'],

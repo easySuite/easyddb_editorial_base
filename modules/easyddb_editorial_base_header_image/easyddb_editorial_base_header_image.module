@@ -1,0 +1,53 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_page_alter().
+ * Sets specific header image for taxonomy term page.
+ */
+function easyddb_editorial_base_header_image_page_alter(&$page) {
+  $term = menu_get_object('taxonomy_term', 2);
+  if ($term) {
+    if ($term->vocabulary_machine_name == 'editorial_base') {
+      $lang = field_language('taxonomy_term', $term, 'field_header_image');
+      if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
+        $image = $term->field_header_image[$lang][0];
+        // Set specific background.
+        $url = file_create_url($image['uri']);
+        if ($url != FALSE) {
+          $css = ".topbar-inner {
+            background-image: url({$url}) !important;
+          }";
+          drupal_add_css($css, array('type' => 'inline'));
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_section_tabs().
+ *
+ */
+function easyddb_editorial_base_header_image_section_tabs() {
+ $tabs = array();
+
+ $tabs['header_image'] = array(
+ '#type' => 'fieldset',
+ '#title' => t('Header image'),
+ '#group' => 'section_tabs',
+ );
+
+ $tabs['header_image']['example_element'] = array(
+ '#type' => 'checkbox',
+ '#title' => t('Example checkbox in a tab'),
+ '#default_value' => variable_get('example_element', 0),
+ );
+
+ return $tabs;
+}
+
+

@@ -1,0 +1,7 @@
+name = Editorial base header image
+description = Displays specific header image on term page.
+core = 7.x
+package = easyDDB
+dependencies[] = image
+dependencies[] = media
+dependencies[] = easyddb_editorial_base
