@@ -102,6 +102,14 @@ function easyddb_editorial_base_term_panel_install() {
           'context' => 'argument_term_1',
           'not' => FALSE,
         ),
+        1 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'view editorialbase panels terms',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
       ),
       'logic' => 'and',
     ),
