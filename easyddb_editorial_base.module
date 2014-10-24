@@ -77,6 +77,11 @@ function easyddb_editorial_base_secure_permissions($role) {
       'view editorialbase panels terms',
     ),
     'local administrator' => array(
+      'create editorial_base content',
+      'edit any editorial_base content',
+      'edit own editorial_base content',
+      'delete any editorial_base content',
+      'delete own editorial_base content',
       'administer editorial base',
       'view editorialbase panels terms',
       'use editorialbase panels terms',
