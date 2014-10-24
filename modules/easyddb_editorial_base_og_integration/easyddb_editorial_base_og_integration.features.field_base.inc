@@ -39,53 +39,31 @@ function easyddb_editorial_base_og_integration_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'og_user_node'
-  $field_bases['og_user_node'] = array(
+  // Exported field_base: 'field_term_page'
+  $field_bases['field_term_page'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'og_user_node',
-    'foreign keys' => array(
-      'node' => array(
-        'columns' => array(
-          'target_id' => 'nid',
-        ),
-        'table' => 'node',
-      ),
-    ),
+    'field_name' => 'field_term_page',
+    'foreign keys' => array(),
     'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'entityreference',
+    'module' => 'list',
     'settings' => array(
-      'handler' => 'og',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'og_behavior' => array(
-            'status' => TRUE,
-          ),
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'membership_type' => 'og_membership_type_default',
-        'sort' => array(
-          'type' => 'none',
-        ),
-        'target_bundles' => array(
-          'editorial_base' => 'editorial_base',
-        ),
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
       ),
-      'handler_submit' => 'Change handler',
+      'allowed_values_function' => '',
       'profile2_private' => FALSE,
-      'target_type' => 'node',
     ),
     'translatable' => 0,
-    'type' => 'entityreference',
+    'type' => 'list_boolean',
   );
 
   return $field_bases;
