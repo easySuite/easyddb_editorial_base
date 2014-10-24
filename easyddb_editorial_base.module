@@ -44,10 +44,59 @@ function easyddb_editorial_base_permission() {
     'description' => 'Change various editorial base settings'
   );
 
+  $perm['view editorialbase panels terms'] = array(
+    'title' => 'View Panel for terms',
+  );
+
+  $perm['use editorialbase panels terms'] = array(
+    'title' => 'Use the Panels In-Place Editor for terms',
+  );
+
   return $perm;
 }
 
 /**
+ *  Implements hook_secure_permissions().
+ */
+function easyddb_editorial_base_secure_permissions($role) {
+  $permissions = array(
+    'anonymous user' => array(
+      'view editorialbase panels terms',
+    ),
+    'authenticated user' => array(
+      'view editorialbase panels terms',
+    ),
+    'administrators' => array(
+      'view editorialbase panels terms',
+    ),
+    'editor' => array(
+      'view editorialbase panels terms',
+      'use editorialbase panels terms',
+    ),
+    'guest blogger' => array(
+      'view editorialbase panels terms',
+    ),
+    'local administrator' => array(
+      'administer editorial base',
+      'view editorialbase panels terms',
+      'use editorialbase panels terms',
+    ),
+    'local editor' => array(
+      'view editorialbase panels terms',
+    ),
+    'provider' => array(
+      'view editorialbase panels terms',
+    ),
+    'staff' => array(
+      'view editorialbase panels terms',
+    ),
+  );
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/*
  * Implement hook_form_FORM_ID_alter().
  *
  * Alter taxonomy term (section) form.
