@@ -22,7 +22,7 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -31,7 +31,7 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
           'trim_length' => 600,
         ),
         'type' => 'text_summary_or_trimmed',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'teaser_highlight' => array(
         'label' => 'above',
@@ -78,7 +78,7 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
           'field_name' => FALSE,
         ),
         'type' => 'og_group_subscribe',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -124,53 +124,46 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-editorial_base-og_user_node'
-  $field_instances['taxonomy_term-editorial_base-og_user_node'] = array(
+  // Exported field_instance: 'taxonomy_term-editorial_base-field_term_page'
+  $field_instances['taxonomy_term-editorial_base-field_term_page'] = array(
     'bundle' => 'editorial_base',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Create a term page',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 0,
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'taxonomy_term',
-    'field_name' => 'og_user_node',
-    'label' => 'Group membership',
-    'required' => 1,
+    'field_name' => 'field_term_page',
+    'label' => 'Term page',
+    'required' => 0,
     'settings' => array(
-      'behaviors' => array(
-        'og_widget' => array(
-          'admin' => array(
-            'widget_type' => 'entityreference_autocomplete',
-          ),
-          'default' => array(
-            'widget_type' => 'options_select',
-          ),
-          'status' => TRUE,
-        ),
-      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 0,
-      'module' => 'og',
-      'settings' => array(),
-      'type' => 'og_complex',
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
       'weight' => 32,
     ),
   );
 
-  // Exported field_instance: 'user-user-og_user_node'
-  $field_instances['user-user-og_user_node'] = array(
-    'bundle' => 'user',
+  // Exported field_instance: 'taxonomy_term-editorial_base-og_group_ref'
+  $field_instances['taxonomy_term-editorial_base-og_group_ref'] = array(
+    'bundle' => 'editorial_base',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -180,13 +173,13 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
         'module' => 'og_ui',
         'settings' => array(),
         'type' => 'og_list_default',
-        'weight' => 0,
+        'weight' => 2,
       ),
     ),
-    'entity_type' => 'user',
-    'field_name' => 'og_user_node',
-    'label' => 'Group membership',
-    'required' => FALSE,
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'og_group_ref',
+    'label' => 'Groups audience',
+    'required' => 0,
     'settings' => array(
       'behaviors' => array(
         'og_widget' => array(
@@ -214,19 +207,22 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
       ),
     ),
     'widget' => array(
+      'active' => 0,
       'module' => 'og',
       'settings' => array(),
       'type' => 'og_complex',
-      'weight' => 7,
+      'weight' => 33,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
+  t('Create a term page');
   t('Determine if this is an OG group.');
   t('Group');
-  t('Group membership');
+  t('Groups audience');
+  t('Term page');
 
   return $field_instances;
 }

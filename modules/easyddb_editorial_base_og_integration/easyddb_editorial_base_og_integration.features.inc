@@ -15,6 +15,15 @@ function easyddb_editorial_base_og_integration_ctools_plugin_api() {
 }
 
 /**
+ * Implements hook_strongarm_alter().
+ */
+function easyddb_editorial_base_og_integration_strongarm_alter(&$data) {
+  if (isset($data['og_menu_max_menus_per_group'])) {
+    $data['og_menu_max_menus_per_group']->value = 0; /* WAS: 1 */
+  }
+}
+
+/**
  * Implements hook_node_info().
  */
 function easyddb_editorial_base_og_integration_node_info() {
