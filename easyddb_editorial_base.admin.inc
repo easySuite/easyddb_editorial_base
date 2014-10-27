@@ -71,7 +71,7 @@ function easyddb_editorial_base_admin_content_types_submit($form, $form_state) {
     'label' => 'Section',
     'field_name' => 'field_editorial_base',
     'entity_type' => 'node',
-    'required' => 1,
+    'required' => 0,
     'default_value' => NULL,
     'widget' => array(
       'type' => 'options_select',
