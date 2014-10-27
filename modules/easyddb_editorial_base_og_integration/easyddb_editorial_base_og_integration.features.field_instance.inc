@@ -161,8 +161,8 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-editorial_base-og_group_ref'
-  $field_instances['taxonomy_term-editorial_base-og_group_ref'] = array(
+ // Exported field_instance: 'taxonomy_term-editorial_base-og_group_ref_eb'
+  $field_instances['taxonomy_term-editorial_base-og_group_ref_eb'] = array(
     'bundle' => 'editorial_base',
     'default_value' => NULL,
     'deleted' => 0,
@@ -177,7 +177,7 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'taxonomy_term',
-    'field_name' => 'og_group_ref',
+    'field_name' => 'og_group_ref_eb',
     'label' => 'Groups audience',
     'required' => 0,
     'settings' => array(
