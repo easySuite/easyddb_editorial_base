@@ -1,4 +1,4 @@
-name = Editorial base term panel
-description = Generates a new page variant for each created term panel.
-core = 7.x
-dependencies[] = easyddb_editorial_base
+name = "easyDDB Editorial Base Term Panel"
+description = "Generates a new page variant for each created EB term panel."
+core = "7.x"
+dependencies[] = "easyddb_editorial_base"

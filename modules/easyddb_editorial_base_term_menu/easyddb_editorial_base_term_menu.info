@@ -1,5 +1,5 @@
-name = Editorial Base Term Menu
-description = Create menu for term.
-package = EasyDDB
-core = 7.x
-version = 7.x-0.1
+name = "easyDDB Editorial Base Term Menu"
+description = "Create menu for EB term."
+package = "easyDDB"
+core = "7.x"
+version = "7.x-0.1"

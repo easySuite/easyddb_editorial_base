@@ -1,6 +1,6 @@
-name = Easyddb editorial base og integration
+name = "easyDDB Editorial Base OG integration"
 core = 7.x
-package = EasyDDB
+package = easyDDB
 version = 7.x-0.1
 project = easyddb_editorial_base_og_integration
 dependencies[] = ding_base

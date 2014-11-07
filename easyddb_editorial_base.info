@@ -1,5 +1,5 @@
-name = Editorial Base
-description = Provides integration of content in the editorial base system.
-package = EasyDDB
-core = 7.x
-version = 7.x-0.1
+name = "easyDDB Editorial Base"
+description = "Provides integration of content in the editorial base system."
+package = "easyDDB"
+core = "7.x"
+version = "7.x-0.1"
