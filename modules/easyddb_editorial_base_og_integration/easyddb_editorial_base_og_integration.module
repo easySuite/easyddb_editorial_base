@@ -61,7 +61,7 @@ function easyddb_editorial_base_og_integration_form_alter(&$form, &$form_state, 
  * entity group.
  */
 function easyddb_editorial_base_og_integration_page_alter(&$page) {
-  if (arg(0) != 'taxonomy') {
+  if (arg(0) != 'taxonomy' || $page['content']['system_main']['#form_id'] == 'taxonomy_form_term') {
     return FALSE;
   }
 
