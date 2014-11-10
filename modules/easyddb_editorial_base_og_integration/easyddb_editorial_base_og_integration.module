@@ -78,3 +78,18 @@ function easyddb_editorial_base_og_integration_page_alter(&$page) {
     }
   }
 }
+
+/**
+ *  Implements hook_form_FORM_ID_alter().
+ */
+function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
+  // Add header image into tab.
+  $form['easyddb_editorial_base']['og_integration'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Groups audience'),
+    '#group' => 'section_tabs',
+  );
+
+  $form['easyddb_editorial_base']['og_integration']['field'] = $form['og_group_ref_eb'];
+  unset($form['og_group_ref_eb']);
+}
