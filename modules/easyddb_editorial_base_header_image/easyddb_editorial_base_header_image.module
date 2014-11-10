@@ -1,28 +1,26 @@
 <?php
 /**
  * @file
- *
+ * Override header image for certain Section terms.
  */
 
 /**
  * Implements hook_page_alter().
- * Sets specific header image for taxonomy term page.
  */
 function easyddb_editorial_base_header_image_page_alter(&$page) {
   $term = menu_get_object('taxonomy_term', 2);
-  if ($term) {
-    if ($term->vocabulary_machine_name == 'editorial_base') {
-      $lang = field_language('taxonomy_term', $term, 'field_header_image');
-      if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
-        $image = $term->field_header_image[$lang][0];
-        // Set specific background.
-        $url = file_create_url($image['uri']);
-        if ($url != FALSE) {
-          $css = ".topbar-inner {
-            background-image: url({$url}) !important;
-          }";
-          drupal_add_css($css, array('type' => 'inline'));
-        }
+  // Sets specific header image for taxonomy term page.
+  if (is_object($term) && $term->vocabulary_machine_name == 'editorial_base') {
+    $image = variable_get('easyddb_image_selector_tid_' . $term->tid);
+    $file_object = file_load($image);
+    if (is_object($file_object) && isset($file_object->uri)) {
+      // Set specific background.
+      $url = file_create_url($file_object->uri);
+      if (!empty($url)) {
+        $css = ".topbar-inner {
+          background-image: url({$url}) !important;
+        }";
+        drupal_add_css($css, array('type' => 'inline'));
       }
     }
   }
@@ -30,24 +28,37 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
 
 /**
  * Implements hook_section_tabs().
- *
  */
-function easyddb_editorial_base_header_image_section_tabs() {
- $tabs = array();
+function easyddb_editorial_base_editorial_base_tabs_alter(&$tabs) {
+  $tabs['header_image'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Header image'),
+    '#group' => 'section_tabs',
+  );
 
- $tabs['header_image'] = array(
- '#type' => 'fieldset',
- '#title' => t('Header image'),
- '#group' => 'section_tabs',
- );
-
- $tabs['header_image']['example_element'] = array(
- '#type' => 'checkbox',
- '#title' => t('Example checkbox in a tab'),
- '#default_value' => variable_get('example_element', 0),
- );
-
- return $tabs;
+  $tabs['header_image']['easyddb_image_selector'] = array(
+    '#type' => 'media',
+    '#title' => t('Image for header image'),
+    '#default_value' => variable_get('easyddb_image_selector_tid_' . $tabs['#tid'], 0),
+    '#media_options' => array(
+      'global' => array(
+        'types' => array(
+          'image' => 'image',
+        ),
+        'enabledPlugins' => array(
+          'upload' => 'upload',
+          'media_default--media_browser_1' => 'media_default--media_browser_1',
+        ),
+        'schemes' => array(
+          'public' => 'public',
+        ),
+        'file_directory' => 'easyddb_image_header',
+        'file_extensions' => 'png gif jpg jpeg',
+        'max_filesize' => '2 MB',
+        'uri_scheme' => 'public',
+      ),
+    ),
+  );
 }
 
 

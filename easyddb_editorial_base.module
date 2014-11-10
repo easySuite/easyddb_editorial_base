@@ -115,11 +115,29 @@ function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_sta
     '#type' => 'vertical_tabs'
   );
 
-  $tabs = module_invoke_all('section_tabs');
+  $tabs = array('#tid' => $form['#term']['tid']);
+  drupal_alter('editorial_base_tabs', $tabs);
+  unset($tabs['#tid']);
 
   if (is_array($tabs)) {
     $form += $tabs;
   }
 
   $form['relations']['#group'] = 'section_tabs';
+  $form['#submit'][] = 'easyddb_editorial_base_form_taxonomy_submit';
+}
+
+/**
+ * Custom submit handler for various term specific tasks.
+ */
+function easyddb_editorial_base_form_taxonomy_submit($form, &$form_state) {
+  $input = $form_state['values'];
+
+  // Some special variable treatment here, so no field instance stuff
+  // is required.
+  foreach ($input as $k => $v) {
+    if (strpos($k, 'easyddb_') !== FALSE) {
+      variable_set($k . '_tid_' . $input['tid'], $v);
+    }
+  }
 }
