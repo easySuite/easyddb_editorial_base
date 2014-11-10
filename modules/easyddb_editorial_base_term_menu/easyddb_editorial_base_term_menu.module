@@ -47,7 +47,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     '#access' => user_access('administer menu'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
+    '#group' => 'section_tabs',
     '#attached' => array(
       'js' => array(drupal_get_path('module', 'menu') . '/menu.js'),
     ),
