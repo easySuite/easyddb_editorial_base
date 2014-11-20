@@ -24,9 +24,9 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     'customized' => 0,
     'parent_depth_limit' => 8,
   );
-  if (!empty($form['#term']['tid'])) {
+  if (!empty($form['#term']->tid)) {
     // Check if term already have menu.
-    $mlid = _easyddb_editorial_base_menu_exist($form['#term']['tid']);
+    $mlid = _easyddb_editorial_base_menu_exist($form['#term']->tid);
     if ($mlid) {
       $link = menu_link_load($mlid);
     }
