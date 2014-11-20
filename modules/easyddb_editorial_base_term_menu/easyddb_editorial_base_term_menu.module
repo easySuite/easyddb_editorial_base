@@ -28,7 +28,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     // Check if term already have menu.
     $mlid = _easyddb_editorial_base_menu_exist($form['#term']['tid']);
     if ($mlid) {
-      $link = menu_link_load($mlid[0]);
+      $link = menu_link_load($mlid);
     }
   }
 
@@ -69,7 +69,6 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
       ),
     ),
   );
-
   // Populate the element with the link data.
   foreach (array('mlid', 'module', 'hidden', 'has_children', 'customized', 'options', 'expanded', 'hidden') as $key) {
     $form['menu']['link'][$key] = array('#type' => 'value', '#value' => $link[$key]);
@@ -89,7 +88,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     '#description' => t('Shown when hovering over the menu link.'),
   );
 
-  $default = ($link['mlid'] ? $link['menu_name'] . ':' . $link['plid'] : variable_get('menu_parent_' . $type, 'main-menu:0'));
+  $default = ($link['plid'] ? $link['menu_name'] . ':' . $link['plid'] : variable_get('menu_parent_' . $type, 'main-menu:0'));
   // If the current parent menu item is not present in options, use the first
   // available option as default value.
   // @todo User should not be allowed to access menu link settings in such a
@@ -138,45 +137,39 @@ function easyddb_editorial_base_term_validate($form, &$form_state) {
  * Callback function for term form save.
  */
 function easyddb_editorial_base_term_submit($form, $form_state) {
-  $tid = $form_state['term']->tid;
-
-  if ($form_state['values']['editorial_base']['enabled'] == 0) {
+  if (isset($form_state['term']->tid)) {
+    $tid = $form_state['term']->tid;
     $mlid = _easyddb_editorial_base_menu_exist($tid);
-    if ($mlid) {
-      _easyddb_editorial_base_remove_term_menu($tid, $mlid[0]);
-      drupal_set_message(t('Menu for @term was deleted.', array('@term' => $form_state['term']->name)), 'status');
+    if ($form_state['values']['editorial_base']['enabled'] == 0) {
+      if ($mlid) {
+        _easyddb_editorial_base_remove_term_menu($tid, $mlid);
+        drupal_set_message(t('Menu for @term was deleted.', array('@term' => $form_state['term']->name)), 'status');
+      }
     }
-  }
-
-  if ($form_state['values']['editorial_base']['enabled'] == 1) {
-    // If menu exist skip creation.
-    if (_easyddb_editorial_base_menu_exist($tid)) {
-      return FALSE;
-    }
-
-    if (empty($form_state['values']['path']['source'])) {
-      $link_path = 'taxonomy/term/' . $tid;
-    }
-    else {
+    elseif ($form_state['values']['editorial_base']['enabled'] == 1) {
       $link_path = $form_state['values']['path']['source'];
+      $vals = $form_state['values']['menu'];
+      $parent = explode(':', $vals['parent']);
+      $menu_link = array(
+        'menu_name' => $parent[0],
+        'link_path' => !empty($link_path) ? $link_path : 'taxonomy/term/' . $tid,
+        'link_title' => $vals['link_title'],
+        'weight' => $vals['weight'],
+        'mlid' => !empty($mlid) ? $mlid : NULL,
+        'plid' => $parent[1],
+        'options' => array('attributes' => array('title' => $vals['description'])),
+      );
+      $new_mlid = menu_link_save($menu_link);
+      menu_cache_clear_all();
+
+      if (!$new_mlid) {
+        drupal_set_message(t('Menu wasn\'t created'), 'error');
+      }
+
+      if (empty($mlid)) {
+        _easyddb_editorial_base_create_term_menu($tid, $new_mlid);
+      }
     }
-
-    $vals = $form_state['values']['menu'];
-    $menu_link = array(
-      'menu_name' => strstr($vals['parent'], ":" , TRUE),
-      'link_path' => $link_path,
-      'link_title' => $vals['link_title'],
-      'weight' => $vals['weight'],
-      'mlid' => NULL,
-    );
-    $mlid = menu_link_save($menu_link);
-    menu_cache_clear_all();
-
-    if (!$mlid) {
-      drupal_set_message(t('Menu wasn\'t created'), 'error');
-    }
-
-    _easyddb_editorial_base_create_term_menu($tid, $mlid);
   }
 }
 
@@ -191,7 +184,7 @@ function _easyddb_editorial_base_menu_exist($tid) {
     ->fields('etm', array('mlid'))
     ->condition('tid', $tid)
     ->execute()
-    ->fetchCol();
+    ->fetchField();
 
   return $mlid;
 }
@@ -203,11 +196,15 @@ function _easyddb_editorial_base_menu_exist($tid) {
  * @param $mlid menu list id.
  */
 function _easyddb_editorial_base_create_term_menu($tid, $mlid) {
-  db_insert('eb_term_menu')
-    ->fields(array(
-      'tid' => $tid,
-      'mlid' => $mlid,
-    ))
+  $fields = array(
+    'tid' => $tid,
+    'mlid' => $mlid,
+  );
+
+  db_merge('eb_term_menu')
+    ->key($fields)
+    ->insertFields($fields)
+    ->updateFields($fields)
     ->execute();
 }
 
