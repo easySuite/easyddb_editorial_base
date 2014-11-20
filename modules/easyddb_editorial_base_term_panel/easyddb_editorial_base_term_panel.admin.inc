@@ -37,7 +37,7 @@ function easyddb_editorial_base_admin_term_panel($form, $form_state) {
       '#options' => $options,
       '#title' => t('Handler for generating term panel'),
       '#description' => t('Choose a handler for generating term panel variants.'),
-      '#default_value' => variable_get('editorial_base_term_panel_handler', 'term_view_panel_context_4'),
+      '#default_value' => variable_get('editorial_base_term_panel_handler', 'term_editorial_base_panel_context'),
     );
   }
 
