@@ -134,7 +134,7 @@ function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form,
     '#group' => 'section_tabs',
   );
 
-  $form['easyddb_editorial_base']['term_panel']['field'] = $form['field_term_page'];
+  $form['easyddb_editorial_base']['term_panel']['field_term_page'] = $form['field_term_page'];
   unset($form['field_term_page']);
 }
 
