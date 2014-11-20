@@ -31,15 +31,14 @@ function easyddb_editorial_base_header_image_field_default_field_bases() {
       ),
     ),
     'locked' => 0,
-    'module' => 'file',
+    'module' => 'image',
     'settings' => array(
-      'display_default' => 0,
-      'display_field' => 0,
+      'default_image' => 0,
       'profile2_private' => FALSE,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
-    'type' => 'file',
+    'type' => 'image',
   );
 
   return $field_bases;
