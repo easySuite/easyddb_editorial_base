@@ -5,23 +5,6 @@
  */
 
 /**
- * Implements hook_menu().
- */
-function easyddb_editorial_base_term_panel_menu() {
-  $items = array();
-
-  $items['admin/config/edbase/term_panel'] = array(
-    'title' => 'Term panel settings',
-    'description' => 'Define which handler use for generating variant',
-    'access arguments' => array('administer editorial base'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('easyddb_editorial_base_admin_term_panel'),
-    'file' => 'easyddb_editorial_base_term_panel.admin.inc',
-  );
-  return $items;
-}
-
-/**
  * Implements hook_term_insert().
  *
  * Act when a term is created and trigger panel variant creation.
