@@ -1,6 +1,7 @@
 name = easyDDB Editorial Base Header Image
 description = Displays specific header image on EB term page.
-core = 7.x-0.1
+core = 7.x
+version = 7.x-0.1
 package = easyDDB
 dependencies[] = easyddb_editorial_base
 dependencies[] = features
