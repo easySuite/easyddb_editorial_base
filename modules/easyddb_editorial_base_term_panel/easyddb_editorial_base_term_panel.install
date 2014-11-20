@@ -92,8 +92,8 @@ function easyddb_editorial_base_term_panel_create_variant() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'term_editorial_base_panel_context';
-  $handler->task = 'term_view';
+  $handler->name = $handler_name;
+  $handler->task = $page;
   $handler->subtask = '';
   $handler->handler = 'panel_context';
   $handler->weight = 99;
