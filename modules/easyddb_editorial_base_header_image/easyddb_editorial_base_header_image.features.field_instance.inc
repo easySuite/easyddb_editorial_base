@@ -28,10 +28,14 @@ function easyddb_editorial_base_header_image_field_default_field_instances() {
     'label' => 'Header image',
     'required' => 0,
     'settings' => array(
-      'description_field' => 0,
+      'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
-      'file_extensions' => 'jpg jpeg png',
+      'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -59,7 +63,7 @@ function easyddb_editorial_base_header_image_field_default_field_instances() {
         ),
       ),
       'type' => 'media_generic',
-      'weight' => 34,
+      'weight' => 3,
     ),
   );
 
