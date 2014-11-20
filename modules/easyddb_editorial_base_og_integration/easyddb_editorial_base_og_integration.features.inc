@@ -29,9 +29,9 @@ function easyddb_editorial_base_og_integration_strongarm_alter(&$data) {
 function easyddb_editorial_base_og_integration_node_info() {
   $items = array(
     'editorial_base' => array(
-      'name' => t('Editorial base'),
+      'name' => t('Editorial base OG'),
       'base' => 'node_content',
-      'description' => '',
+      'description' => t('Organic Group for editorial base needs'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
