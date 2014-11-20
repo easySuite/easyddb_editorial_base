@@ -10,19 +10,17 @@
  */
 function easyddb_editorial_base_header_image_page_alter(&$page) {
   $term = menu_get_object('taxonomy_term', 2);
-  if ($term) {
-    if ($term->vocabulary_machine_name == 'editorial_base') {
-      $lang = field_language('taxonomy_term', $term, 'field_header_image');
-      if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
-        $image = $term->field_header_image[$lang][0];
-        // Set specific background.
-        $url = file_create_url($image['uri']);
-        if ($url != FALSE) {
-          $css = ".topbar-inner {
-            background-image: url({$url}) !important;
-          }";
-          drupal_add_css($css, array('type' => 'inline'));
-        }
+  if ($term && $term->vocabulary_machine_name == 'editorial_base') {
+    $lang = field_language('taxonomy_term', $term, 'field_header_image');
+    if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
+      $image = $term->field_header_image[$lang][0];
+      // Set specific background.
+      $url = image_style_url('editorial_base_header_image', $image['uri']);
+      if (!empty($url)) {
+        $css = ".topbar-inner {
+          background-image: url({$url}) !important;
+        }";
+        drupal_add_css($css, array('type' => 'inline'));
       }
     }
   }
@@ -39,6 +37,8 @@ function easyddb_editorial_base_header_image_form_taxonomy_form_term_alter(&$for
     '#group' => 'section_tabs',
   );
 
-  $form['easyddb_editorial_base']['header_image']['field'] = $form['field_header_image'];
+  $form['easyddb_editorial_base']['header_image']['field_header_image'] = $form['field_header_image'];
   unset($form['field_header_image']);
 }
+
+include_once 'easyddb_editorial_base_header_image.features.inc';
