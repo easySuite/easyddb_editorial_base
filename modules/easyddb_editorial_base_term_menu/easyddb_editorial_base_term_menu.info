@@ -3,3 +3,6 @@ description = "Create menu for EB term."
 package = "easyDDB"
 core = "7.x"
 version = "7.x-0.1"
+
+dependencies[] = easyddb_editorial_base
+
