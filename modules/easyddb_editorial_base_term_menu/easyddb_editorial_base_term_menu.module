@@ -24,9 +24,9 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
     'customized' => 0,
     'parent_depth_limit' => 8,
   );
-  if (!empty($form['#term']->tid)) {
+  if (!empty($form['#term']['tid'])) {
     // Check if term already have menu.
-    $mlid = _easyddb_editorial_base_menu_exist($form['#term']->tid);
+    $mlid = _easyddb_editorial_base_menu_exist($form['#term']['tid']);
     if ($mlid) {
       $link = menu_link_load($mlid);
     }
@@ -35,7 +35,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
   // menu_parent_options() is goofy and can actually handle either a menu link
   // or a node type both as second argument. Pick based on whether there is
   // a link already (menu_node_prepare() sets mlid default to 0).
-  $options = menu_parent_options(menu_get_menus(), $link['mlid'], $type);
+  $options = menu_parent_options(array('main-menu' => 'main-menu'), $link['mlid'], $type);
   // If no possible parent menu items were found, there is nothing to display.
   if (empty($options)) {
     return;
