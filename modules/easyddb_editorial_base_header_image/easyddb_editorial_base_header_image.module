@@ -30,15 +30,16 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
  *  Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_header_image_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
-  // Add header image into tab.
-  $form['easyddb_editorial_base']['header_image'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Header image'),
-    '#group' => 'section_tabs',
-  );
-
-  $form['easyddb_editorial_base']['header_image']['field_header_image'] = $form['field_header_image'];
-  unset($form['field_header_image']);
+  if (!isset($form_state['triggering_element'])) {
+    // Add header image into tab.
+    $form['easyddb_editorial_base']['header_image'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Header image'),
+      '#group' => 'section_tabs',
+    );
+    $form['easyddb_editorial_base']['header_image']['field_header_image'] = $form['field_header_image'];
+    unset($form['field_header_image']);
+  }
 }
 
 include_once 'easyddb_editorial_base_header_image.features.inc';

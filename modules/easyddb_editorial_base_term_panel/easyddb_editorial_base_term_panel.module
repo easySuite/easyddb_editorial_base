@@ -127,14 +127,16 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
  *  Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
-  // Add term page into tab.
-  $form['easyddb_editorial_base']['term_panel'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Term page'),
-    '#group' => 'section_tabs',
-  );
+  if (!isset($form_state['triggering_element'])) {
+    // Add term page into tab.
+    $form['easyddb_editorial_base']['term_panel'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Term page'),
+      '#group' => 'section_tabs',
+    );
 
-  $form['easyddb_editorial_base']['term_panel']['field_term_page'] = $form['field_term_page'];
-  unset($form['field_term_page']);
+    $form['easyddb_editorial_base']['term_panel']['field_term_page'] = $form['field_term_page'];
+    unset($form['field_term_page']);
+  }
 }
 
