@@ -94,7 +94,6 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
 
   $handler = isset($handlers[$handler_name]) ? $handlers[$handler_name] : NULL;
   $tid = $term->tid;
-
   if (empty($handler)) {
     return FALSE;
   }
@@ -114,6 +113,7 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
   $handler_name = "term_view_panel_context_tid_{$tid}";
   $variant_title = t('Test (@test)', array('@test' => $term->name));
   $pipeline = module_exists('panels_ipe') ? 'ipe' : 'standard';
+  unset($handler->did);
   $handler->name = $handler_name;
   $handler->conf['title'] = $variant_title;
   $handler->conf['pipeline'] = $pipeline;

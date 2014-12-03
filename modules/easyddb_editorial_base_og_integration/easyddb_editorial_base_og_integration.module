@@ -70,9 +70,9 @@ function easyddb_editorial_base_og_integration_page_alter(&$page) {
     global $user;
     $groups = og_get_groups_by_user($user);
     $node_groups = isset($groups['node']) ? $groups['node'] : NULL;
-    if (isset($item->og_user_node[LANGUAGE_NONE][0]['target_id'])) {
-      $term_in_og = $item->og_user_node[LANGUAGE_NONE][0]['target_id'];
-      if (is_array($node_groups) && !in_array($term_in_og, $node_groups) || !user_access('use editorialbase panels terms')) {
+    if (isset($item->og_group_ref_eb[LANGUAGE_NONE][0]['target_id'])) {
+      $term_in_og = $item->og_group_ref_eb[LANGUAGE_NONE][0]['target_id'];
+      if (!is_array($node_groups) || !in_array($term_in_og, $node_groups) || !user_access('use editorialbase panels terms')) {
         $css_file = drupal_get_path('module', 'easyddb_editorial_base_og_integration') . '/css/easyddb_editorial_base_og_integration.css';
         drupal_add_css($css_file, 'file');
       }

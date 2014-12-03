@@ -72,6 +72,8 @@ function easyddb_editorial_base_secure_permissions($role) {
     'editor' => array(
       'view editorialbase panels terms',
       'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing'
     ),
     'guest blogger' => array(
       'view editorialbase panels terms',
@@ -85,9 +87,14 @@ function easyddb_editorial_base_secure_permissions($role) {
       'administer editorial base',
       'view editorialbase panels terms',
       'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing'
     ),
     'local editor' => array(
       'view editorialbase panels terms',
+      'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing'
     ),
     'provider' => array(
       'view editorialbase panels terms',
