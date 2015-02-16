@@ -124,43 +124,6 @@ function easyddb_editorial_base_og_integration_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-editorial_base-field_term_page'
-  $field_instances['taxonomy_term-editorial_base-field_term_page'] = array(
-    'bundle' => 'editorial_base',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => 'Create a term page',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 1,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_term_page',
-    'label' => 'Term page',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 1,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 32,
-    ),
-  );
-
  // Exported field_instance: 'taxonomy_term-editorial_base-og_group_ref_eb'
   $field_instances['taxonomy_term-editorial_base-og_group_ref_eb'] = array(
     'bundle' => 'editorial_base',
