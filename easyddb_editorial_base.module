@@ -34,6 +34,37 @@ function easyddb_editorial_base_menu() {
 }
 
 /**
+ * Implements hook_menu_alter().
+ */
+function easyddb_editorial_base_menu_alter(&$items) {
+  $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access callback'] = 'easyddb_editorial_base_section_add_access';
+  $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access arguments'] = array(3);
+}
+
+/**
+ * Custom access callback for overriding taxonomy access rules.
+ *
+ * @param object $voc
+ *   Loaded vocabulary.
+ * @return boolean
+ *   Access value.
+ *
+ * @see easyddb_editorial_base_menu_alter()
+ */
+function easyddb_editorial_base_section_add_access($voc) {
+  global $user;
+
+  if ($voc->machine_name == 'editorial_base') {
+    $access = user_access('edit terms in 8', $user);
+  }
+  else {
+    $access = user_access('administer taxonomy', $user);
+  }
+
+  return $access;
+}
+
+/**
  * Implements hook_permission().
  */
 function easyddb_editorial_base_permission() {
@@ -68,12 +99,16 @@ function easyddb_editorial_base_secure_permissions($role) {
     ),
     'administrators' => array(
       'view editorialbase panels terms',
+      'edit terms in 8',
+      'delete terms in 8',
     ),
     'editor' => array(
       'view editorialbase panels terms',
       'use editorialbase panels terms',
       'use panels in place editing',
-      'change layouts in place editing'
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
     ),
     'guest blogger' => array(
       'view editorialbase panels terms',
@@ -88,13 +123,17 @@ function easyddb_editorial_base_secure_permissions($role) {
       'view editorialbase panels terms',
       'use editorialbase panels terms',
       'use panels in place editing',
-      'change layouts in place editing'
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
     ),
     'local editor' => array(
       'view editorialbase panels terms',
       'use editorialbase panels terms',
       'use panels in place editing',
-      'change layouts in place editing'
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
     ),
     'provider' => array(
       'view editorialbase panels terms',
