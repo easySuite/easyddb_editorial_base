@@ -38,12 +38,23 @@ function easyddb_editorial_base_menu() {
  */
 function easyddb_editorial_base_menu_alter(&$items) {
   $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access callback'] = 'easyddb_editorial_base_section_add_access';
+  $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access arguments'] = array(3);
 }
 
-function easyddb_editorial_base_section_add_access() {
+/**
+ * Custom access callback for overriding taxonomy access rules.
+ *
+ * @param object $voc
+ *   Loaded vocabulary.
+ * @return boolean
+ *   Access value.
+ *
+ * @see easyddb_editorial_base_menu_alter()
+ */
+function easyddb_editorial_base_section_add_access($voc) {
   global $user;
 
-  if (arg(3) == 'editorial_base') {
+  if ($voc->machine_name == 'editorial_base') {
     $access = user_access('edit terms in 8', $user);
   }
   else {
