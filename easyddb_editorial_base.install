@@ -84,3 +84,18 @@ function _easyddb_editorial_base_purge_base() {
     taxonomy_vocabulary_delete($voc->vid);
   }
 }
+
+/**
+ * Add a default shortcut to section term creation page.
+ */
+function easyddb_editorial_base_update_7000() {
+  $t = get_t();
+
+  $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+  $shortcut_set->links[] = array(
+    'link_path' => 'admin/structure/taxonomy/editorial_base/add',
+    'link_title' => $t('Add section term'),
+  );
+
+  shortcut_set_save($shortcut_set);
+}
