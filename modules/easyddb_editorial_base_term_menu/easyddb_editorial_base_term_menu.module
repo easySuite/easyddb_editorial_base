@@ -8,6 +8,10 @@
  *  Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, &$form_state) {
+  if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
+    return;
+  }
+
   if (!isset($form_state['triggering_element'])) {
     // Generate a list of possible parents (not including this link or descendants).
     $type = 'eb_term';
