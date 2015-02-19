@@ -84,6 +84,10 @@ function easyddb_editorial_base_og_integration_page_alter(&$page) {
  *  Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
+  if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
+    return;
+  }
+
   if (!isset($form_state['triggering_element'])) {
     // Add header image into tab.
     $form['og_group_ref_eb']['#type'] = 'fieldset';
