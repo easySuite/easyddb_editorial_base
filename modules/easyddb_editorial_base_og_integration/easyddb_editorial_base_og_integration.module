@@ -94,4 +94,75 @@ function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$f
     $form['og_group_ref_eb']['#title'] = t('Groups audience');
     $form['og_group_ref_eb']['#group'] = 'section_tabs';
   }
+
+  $og_title = (isset($form['#entity']->name)) ? $form['#entity']->name : '';
+  $form['eb_create_og'] = array(
+    '#type' => 'fieldset',
+    '#title' => t("Auto create a new OG for this term"),
+    '#group' => 'section_tabs',
+  );
+
+  $form['eb_create_og']['auto_create_enable'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Auto create new OG'),
+    '#default_value' => variable_get('auto_create_enable', TRUE),
+  );
+
+  $form['eb_create_og']['auto_create_og_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('OG name'),
+    '#default_value' => $og_title,
+    '#description' => t('If "Auto create new OG" option is checked new Organic Group will be named as term.'),
+    '#states' => array(
+      'disabled' => array(
+        'input[name="auto_create_enable"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
+
+  $form['#submit'][] = 'easyddb_editorial_base_og_integration_auto_create_og_submit';
+}
+
+/**
+ * Submit function for creating OG on term creation.
+ * @see easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter().
+ */
+function easyddb_editorial_base_og_integration_auto_create_og_submit(&$form, &$form_state) {
+  $term_name = $form_state['values']['name'];
+  $og_node_type = 'editorial_base';
+
+  $query = new EntityFieldQuery();
+
+
+  $entities = $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('type', $og_node_type)
+    ->propertyCondition('title', $term_name)
+    ->range(0,1)
+    ->execute();
+
+  if (!empty($entities['node'])) {
+    return;
+  }
+
+  global $user;
+
+  $node = new stdClass();
+  $node->type = $og_node_type;
+  node_object_prepare($node);
+
+  $node->title    = $term_name;
+  $node->language = LANGUAGE_NONE;
+
+  $node = node_submit($node);
+  node_save($node);
+
+  // Add the user to the group
+  og_group('node', $node->nid, array(
+    "entity type"       => "user",
+    "entity"        => $user,
+    "membership type"   => OG_MEMBERSHIP_TYPE_DEFAULT,
+  ));
+
+  // Changes the users role in the group (1 = non-member, 2 = member, 3 = administrator member)
+  og_role_grant('node', $node->nid, $user->uid, 2);
 }
