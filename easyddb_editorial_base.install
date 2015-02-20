@@ -10,6 +10,7 @@
 function easyddb_editorial_base_install() {
   _easyddb_editorial_base_create_base();
   _easyddb_editorial_base_create_fields();
+  easyddb_editorial_base_section_shortcut();
 
   variable_set('editorial_base_content_types', array());
 }
@@ -89,6 +90,17 @@ function _easyddb_editorial_base_purge_base() {
  * Add a default shortcut to section term creation page.
  */
 function easyddb_editorial_base_update_7000() {
+  easyddb_editorial_base_section_shortcut();
+}
+
+/**
+ * Create a link in shortcut menu bar.
+ */
+function easyddb_editorial_base_section_shortcut() {
+  if (easyddb_editorial_base_section_shortcut_exists()) {
+    return;
+  }
+
   $t = get_t();
 
   $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
@@ -98,4 +110,22 @@ function easyddb_editorial_base_update_7000() {
   );
 
   shortcut_set_save($shortcut_set);
+}
+
+/**
+ * Check if section shortcut link already exists.
+ *
+ * @return boolean
+ *   TRUE if the link exists, FALSE otherwise.
+ */
+function easyddb_editorial_base_section_shortcut_exists() {
+  $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+
+  foreach ($shortcut_set->links as $link) {
+    if ($link['link_path'] == 'admin/structure/taxonomy/editorial_base/add') {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
