@@ -96,26 +96,20 @@ function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$f
   }
 
   $og_title = (isset($form['#entity']->name)) ? $form['#entity']->name : '';
-  $form['eb_create_og'] = array(
-    '#type' => 'fieldset',
-    '#title' => t("Auto create a new OG for this term"),
-    '#group' => 'section_tabs',
-  );
-
-  $form['eb_create_og']['auto_create_enable'] = array(
+  $form['og_group_ref_eb']['und']['eb_create_og']['auto_create_enable'] = array(
     '#type' => 'checkbox',
     '#title' => t('Auto create new OG'),
     '#default_value' => variable_get('auto_create_enable', TRUE),
   );
 
-  $form['eb_create_og']['auto_create_og_title'] = array(
+  $form['og_group_ref_eb']['und']['eb_create_og']['auto_create_og_title'] = array(
     '#type' => 'textfield',
     '#title' => t('OG name'),
     '#default_value' => $og_title,
     '#description' => t('If "Auto create new OG" option is checked new Organic Group will be named as term.'),
     '#states' => array(
       'disabled' => array(
-        'input[name="auto_create_enable"]' => array('checked' => TRUE),
+        '#edit-og-group-ref-eb-und-eb-create-og-auto-create-enable' => array('checked' => TRUE),
       ),
     ),
   );
