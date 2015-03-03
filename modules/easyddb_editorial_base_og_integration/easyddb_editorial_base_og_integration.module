@@ -36,12 +36,14 @@ function easyddb_editorial_base_og_integration_form_alter(&$form, &$form_state, 
       $disabled_options[$tid] = array(
         'disabled' => TRUE,
       );
-      foreach ($user_og_groups['node'] as $id => $gid) {
-        if (empty($term_in_og['node'])) {
-          continue;
-        }
-        if ($gid == current($term_in_og['node'])) {
-          $disabled_options[$tid]['disabled'] = FALSE;
+      if (isset($user_og_groups['node'])) {
+        foreach ($user_og_groups['node'] as $id => $gid) {
+          if (empty($term_in_og['node'])) {
+            continue;
+          }
+          if ($gid == current($term_in_og['node'])) {
+            $disabled_options[$tid]['disabled'] = FALSE;
+          }
         }
       }
     }
