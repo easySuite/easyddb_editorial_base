@@ -89,34 +89,47 @@ function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$f
   if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
     return;
   }
-
   if (!isset($form_state['triggering_element'])) {
-    // Add header image into tab.
-    $form['og_group_ref_eb']['#type'] = 'fieldset';
-    $form['og_group_ref_eb']['#title'] = t('Groups audience');
-    $form['og_group_ref_eb']['#group'] = 'section_tabs';
-  }
+      $form['easyddb_editorial_base']['term_panel'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Term page'),
+      '#group' => 'section_tabs',
+    );
 
-  $og_title = (isset($form['#entity']->name)) ? $form['#entity']->name : '';
-  $form['og_group_ref_eb'][LANGUAGE_NONE]['eb_create_og']['auto_create_enable'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Auto create new OG'),
-    '#default_value' => variable_get('auto_create_enable', TRUE),
-  );
+    $form['og_wrapper']['#type'] = 'fieldset';
+    $form['og_wrapper']['#title'] = t('Groups audience');
+    $form['og_wrapper']['#group'] = 'section_tabs';
+    $form['og_wrapper']['#tree'] = TRUE;
+    $form['og_wrapper']['field_eb_autocreate_og'] =  $form['field_eb_autocreate_og'];
+    $form['og_wrapper']['og_group_ref_eb'] =  $form['og_group_ref_eb'];
+    unset($form['og_group_ref_eb']);
+    unset($form['field_eb_autocreate_og']);
 
-  $form['og_group_ref_eb'][LANGUAGE_NONE]['eb_create_og']['auto_create_og_title'] = array(
-    '#type' => 'textfield',
-    '#title' => t('OG name'),
-    '#default_value' => $og_title,
-    '#description' => t('If "Auto create new OG" option is checked new Organic Group will be named as term.'),
-    '#states' => array(
-      'disabled' => array(
-        '#edit-og-group-ref-eb-und-eb-create-og-auto-create-enable' => array('checked' => TRUE),
+    if (isset($form_state['term']->tid)) {
+      $group = og_get_entity_groups('taxonomy_term', $form_state['term']);
+      if (!empty($group)) {
+        $form['og_wrapper']['field_eb_autocreate_og'][LANGUAGE_NONE]['#default_value'] = 0;
+      }
+    }
+
+    $form['og_wrapper']['og_group_ref_eb']['#states'] = array(
+      'invisible' => array(
+        ':input[name="og_wrapper[field_eb_autocreate_og][und]"]' => array('checked' => TRUE),
       ),
-    ),
-  );
+    );
+  }
+  $form['#submit'] = array('easyddb_editorial_base_og_integration_term_presave', 'taxonomy_form_term_submit', 'easyddb_editorial_base_og_integration_auto_create_og_submit');
+}
 
-  $form['#submit'][] = 'easyddb_editorial_base_og_integration_auto_create_og_submit';
+/**
+ * Submit before main submit. Is needed for correction of form_state['values'] structure.
+ * @todo Find better solition.
+ */
+function easyddb_editorial_base_og_integration_term_presave(&$form, &$form_state) {
+  $form_state['values']['field_eb_autocreate_og'] =  $form_state['values']['og_wrapper']['field_eb_autocreate_og'];
+  $form_state['values']['og_group_ref_eb'] =  $form_state['values']['og_wrapper']['og_group_ref_eb'];
+  $form_state['values']['og_wrapper']['og_group_ref_eb'] =  $form_state['values']['og_group_ref_eb'];
+  unset($form_state['values']['og_wrapper']);
 }
 
 /**
@@ -124,28 +137,18 @@ function easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter(&$f
  * @see easyddb_editorial_base_og_integration_form_taxonomy_form_term_alter().
  */
 function easyddb_editorial_base_og_integration_auto_create_og_submit(&$form, &$form_state) {
-  $term_name = $form_state['values']['name'];
-  $og_node_type = 'editorial_base';
+  $values = $form_state['values'];
 
-  $query = new EntityFieldQuery();
-
-
-  $entities = $query->entityCondition('entity_type', 'node')
-    ->propertyCondition('type', $og_node_type)
-    ->propertyCondition('title', $term_name)
-    ->range(0,1)
-    ->execute();
-
-  if (!empty($entities['node'])) {
+  if (empty($values['field_eb_autocreate_og'][LANGUAGE_NONE][0]['value'])) {
     return;
   }
-
   global $user;
+  $term_name = $form_state['values']['name'];
+  $og_node_type = 'editorial_base';
 
   $node = new stdClass();
   $node->type = $og_node_type;
   node_object_prepare($node);
-
   $node->title    = $term_name;
   $node->language = LANGUAGE_NONE;
 
@@ -161,4 +164,12 @@ function easyddb_editorial_base_og_integration_auto_create_og_submit(&$form, &$f
 
   // Changes the users role in the group (1 = non-member, 2 = member, 3 = administrator member)
   og_role_grant('node', $node->nid, $user->uid, 2);
+
+  og_group('node', $node->nid, array(
+    "entity_type" => "taxonomy_term",
+    "field_name" => 'og_group_ref_eb',
+    "entity" => $form_state['term'],
+    "membership type" => OG_MEMBERSHIP_TYPE_DEFAULT,
+  ));
 }
+
