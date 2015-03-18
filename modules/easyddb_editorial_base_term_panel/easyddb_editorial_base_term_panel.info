@@ -1,0 +1,8 @@
+name = "easyDDB Editorial Base Term Panel"
+description = "Generates a new page variant for each created EB term panel."
+core = "7.x"
+version = "7.x-0.1"
+package = "easyDDB"
+
+dependencies[] = "easyddb_editorial_base"
+dependencies[] = "panels_ipe"

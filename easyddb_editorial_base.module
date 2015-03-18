@@ -1,0 +1,187 @@
+<?php
+/**
+ * @file
+ * Editorial dashboard module.
+ *
+ * Provides integration with editorial base system.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function easyddb_editorial_base_menu() {
+  $menu = array();
+
+  $menu['admin/config/edbase'] = array(
+    'title' => 'Editorial Base',
+    'description' => 'Editorial Base settings',
+    'access arguments' => array('administer editorial base'),
+    'page callback' => 'easyddb_editorial_base_admin_menu_block_page',
+    'page arguments' => array(),
+    'file' => 'easyddb_editorial_base.admin.inc',
+  );
+
+  $menu['admin/config/edbase/content'] = array(
+    'title' => 'Content types',
+    'description' => 'Node bundles that are a part of editorial base system',
+    'access arguments' => array('administer editorial base'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('easyddb_editorial_base_admin_content_types'),
+    'file' => 'easyddb_editorial_base.admin.inc',
+  );
+
+  return $menu;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function easyddb_editorial_base_menu_alter(&$items) {
+  $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access callback'] = 'easyddb_editorial_base_section_add_access';
+  $items['admin/structure/taxonomy/%taxonomy_vocabulary_machine_name/add']['access arguments'] = array(3);
+}
+
+/**
+ * Custom access callback for overriding taxonomy access rules.
+ *
+ * @param object $voc
+ *   Loaded vocabulary.
+ * @return boolean
+ *   Access value.
+ *
+ * @see easyddb_editorial_base_menu_alter()
+ */
+function easyddb_editorial_base_section_add_access($voc) {
+  global $user;
+
+  if ($voc->machine_name == 'editorial_base') {
+    $access = user_access('edit terms in 8', $user);
+  }
+  else {
+    $access = user_access('administer taxonomy', $user);
+  }
+
+  return $access;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function easyddb_editorial_base_permission() {
+  $perm = array();
+
+  $perm['administer editorial base'] = array(
+    'title' => 'Administer editorial base',
+    'description' => 'Change various editorial base settings'
+  );
+
+  $perm['view editorialbase panels terms'] = array(
+    'title' => 'View Panel for terms',
+  );
+
+  $perm['use editorialbase panels terms'] = array(
+    'title' => 'Use the Panels In-Place Editor for terms',
+  );
+
+  return $perm;
+}
+
+/**
+ *  Implements hook_secure_permissions().
+ */
+function easyddb_editorial_base_secure_permissions($role) {
+  $permissions = array(
+    'anonymous user' => array(
+      'view editorialbase panels terms',
+    ),
+    'authenticated user' => array(
+      'view editorialbase panels terms',
+    ),
+    'administrators' => array(
+      'view editorialbase panels terms',
+      'edit terms in 8',
+      'delete terms in 8',
+    ),
+    'editor' => array(
+      'view editorialbase panels terms',
+      'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
+    ),
+    'guest blogger' => array(
+      'view editorialbase panels terms',
+    ),
+    'local administrator' => array(
+      'create editorial_base content',
+      'edit any editorial_base content',
+      'edit own editorial_base content',
+      'delete any editorial_base content',
+      'delete own editorial_base content',
+      'administer editorial base',
+      'view editorialbase panels terms',
+      'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
+    ),
+    'local editor' => array(
+      'view editorialbase panels terms',
+      'use editorialbase panels terms',
+      'use panels in place editing',
+      'change layouts in place editing',
+      'edit terms in 8',
+      'delete terms in 8',
+    ),
+    'provider' => array(
+      'view editorialbase panels terms',
+    ),
+    'staff' => array(
+      'view editorialbase panels terms',
+    ),
+  );
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/*
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Alter taxonomy term (section) form.
+ */
+function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_state) {
+  if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
+    return;
+  }
+
+  $form['section_tabs'] = array(
+    '#type' => 'vertical_tabs'
+  );
+
+  $tabs = module_invoke_all('section_tabs');
+
+  if (is_array($tabs)) {
+    $form += $tabs;
+  }
+
+  $form['relations']['#group'] = 'section_tabs';
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function easyddb_editorial_base_entity_view_alter(&$build, $type) {
+  if ($type !== 'node') {
+    return;
+  }
+  $eb_types = variable_get('editorial_base_content_types', array());
+
+  if (in_array($build['#bundle'], $eb_types)) {
+    $eb_taxonomy_field = field_get_items($type, $build['#node'], 'field_editorial_base');
+    $eb_taxonomy = field_view_value($type, $build['#node'], 'field_editorial_base', $eb_taxonomy_field[0]);
+    $build['field_editorial_base'] = $eb_taxonomy;
+  }
+}
