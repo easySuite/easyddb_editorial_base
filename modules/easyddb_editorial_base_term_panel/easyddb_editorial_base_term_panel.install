@@ -8,6 +8,66 @@
  * Implements hook_install().
  */
 function easyddb_editorial_base_term_panel_install() {
+  easyddb_editorial_base_term_panel_create_fields();
+  easyddb_editorial_base_term_panel_create_variant();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function easyddb_editorial_base_term_panel_uninstall() {
+  easyddb_editorial_base_term_panel_purge_field();
+}
+
+/**
+ * Re-create existing section terms panel variants.
+ */
+function easyddb_editorial_base_term_panel_update_7001() {
+  $panel_patterns = array(
+    'term_editorial_base_panel_context',
+    'term_view_panel_context_tid_',
+  );
+
+  $task = page_manager_get_task('term_view');
+  $handlers = page_manager_load_task_handlers($task, '');
+
+  foreach ($handlers as $name => $handler) {
+    $delete = FALSE;
+    foreach ($panel_patterns as $pattern) {
+      if (strpos($name, $pattern) !== FALSE) {
+        $delete = TRUE;
+        break;
+      }
+    }
+
+    if ($delete) {
+      page_manager_delete_task_handler($handler);
+    }
+  }
+
+  easyddb_editorial_base_term_panel_create_variant();
+
+  $voc = taxonomy_vocabulary_machine_name_load('editorial_base');
+  $tree = taxonomy_get_tree($voc->vid);
+  $tids = array();
+
+  foreach ($tree as $item) {
+    $tids[] = $item->tid;
+  }
+
+  $terms = entity_load('taxonomy_term', $tids);
+  foreach ($terms as $term) {
+    $entity = entity_metadata_wrapper('taxonomy_term', $term);
+    if ($entity->field_term_page->value()) {
+      easyddb_editorial_base_term_panel_create_term_variant($term);
+    }
+  }
+}
+
+/**
+ * Create term panel checkbox field and instance.
+ */
+function easyddb_editorial_base_term_panel_create_fields() {
   $field = array(
     'active' => 1,
     'cardinality' => 1,
@@ -71,29 +131,29 @@ function easyddb_editorial_base_term_panel_install() {
     ),
   );
   field_create_instance($instance);
+}
 
-  easyddb_editorial_base_term_panel_create_variant();
+/**
+ * Remove term panel checkbox field and instance.
+ */
+function easyddb_editorial_base_term_panel_purge_field() {
+  $instance = field_info_instance('taxonomy_term', 'field_term_page', 'editorial_base');
+  if (!empty($instance)) {
+    field_delete_instance($instance);
+  }
+
+  field_delete_field('field_term_page');
 }
 
 /**
  * Creates programmatically a custom panel variant.
  */
 function easyddb_editorial_base_term_panel_create_variant() {
-  $handler_name = 'term_editorial_base_panel_context';
-  $page = 'term_view';
-  $task = page_manager_get_task($page);
-  ctools_get_plugins('page_manager', 'task_handlers', 'panel_context');
-  $handlers = page_manager_load_sorted_handlers($task, '');
-
-  if (isset($handlers[$handler_name])) {
-    return;
-  }
-
   $handler = new stdClass();
-  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->disabled = FALSE;
   $handler->api_version = 1;
-  $handler->name = $handler_name;
-  $handler->task = $page;
+  $handler->name = 'term_editorial_base_panel_context';
+  $handler->task = 'term_view';
   $handler->subtask = '';
   $handler->handler = 'panel_context';
   $handler->weight = 99;
@@ -156,42 +216,33 @@ function easyddb_editorial_base_term_panel_create_variant() {
   $display->title = '';
   $display->content = array();
   $display->panels = array();
-    $pane = new stdClass();
-    $pane->pid = 'new-1';
-    $pane->panel = 'main_content';
-    $pane->type = 'views_panes';
-    $pane->subtype = 'tags_list-ding_content_tags';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'context' => array(
-        0 => 'argument_term_1',
-      ),
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['main_content'][0] = 'new-1';
+
+  $pane = new stdClass();
+  $pane->pid = 'new-1';
+  $pane->panel = 'main_content';
+  $pane->type = 'views_panes';
+  $pane->subtype = 'tags_list-ding_content_tags';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'context' => array(
+      0 => 'argument_term_1',
+    ),
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+
+  $display->content['new-1'] = $pane;
+  $display->panels['main_content'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
+
   page_manager_save_task_handler($handler);
-}
-
-/**
- * Implements hook_uninstall().
- */
-function easyddb_editorial_base_term_panel_uninstall() {
-  $instance = field_info_instance('taxonomy_term', 'field_term_page', 'editorial_base');
-  if (!empty($instance)) {
-    field_delete_instance($instance);
-  }
-
-  field_delete_field('field_term_page');
 }

@@ -25,6 +25,11 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
   if ($term->vocabulary_machine_name == 'editorial_base') {
     $term_page = field_get_items('taxonomy_term', $term, 'field_term_page');
     $term_page_old = field_get_items('taxonomy_term', $term->original, 'field_term_page');
+
+    if (!isset($page->handler_info['term_view_panel_context_tid_' . $term->tid])) {
+      return;
+    }
+
     // When unchecked.
     if (($term_page[0]['value'] - $term_page_old[0]['value']) == -1) {
       // Get page.
@@ -86,17 +91,19 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
     return FALSE;
   }
 
-  $page = 'term_view';
-  $task = page_manager_get_task($page);
-  ctools_get_plugins('page_manager', 'task_handlers', 'panel_context');
+  $task = page_manager_get_task('term_view');
+  $handlers = page_manager_load_task_handlers($task, '');
 
-  $handlers = page_manager_load_sorted_handlers($task, '');
-
-  $handler = isset($handlers[$handler_name]) ? $handlers[$handler_name] : NULL;
-  $tid = $term->tid;
-  if (empty($handler)) {
+  if (!isset($handlers['term_editorial_base_panel_context'])) {
     return FALSE;
   }
+
+  $export = page_manager_export_task_handler($handlers['term_editorial_base_panel_context']);
+  ob_start();
+  eval($export);
+  ob_end_clean();
+
+  $tid = $term->tid;
   // Normally, panels do not support specific panel to node id mapping, so use
   // php code instead.
   $php_code = '$item = menu_get_object(\'taxonomy_term\', 2);if (isset($item->tid) && $item->tid == ' . $tid . ') {return TRUE;}return FALSE;';
@@ -111,9 +118,8 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
   );
 
   $handler_name = "term_view_panel_context_tid_{$tid}";
-  $variant_title = t('Test (@test)', array('@test' => $term->name));
+  $variant_title = t('Edtitorial base term (@term)', array('@term' => $term->name));
   $pipeline = module_exists('panels_ipe') ? 'ipe' : 'standard';
-  unset($handler->did);
   $handler->name = $handler_name;
   $handler->conf['title'] = $variant_title;
   $handler->conf['pipeline'] = $pipeline;
@@ -143,4 +149,3 @@ function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form,
     unset($form['field_term_page']);
   }
 }
-
