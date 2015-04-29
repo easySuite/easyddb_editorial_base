@@ -7,6 +7,21 @@
 include_once 'easyddb_editorial_base_og_integration.features.inc';
 
 /**
+ * Implements hook_secure_permissions().
+ */
+function easyddb_editorial_base_og_integration_secure_permissions($role) {
+  $permissions = array(
+    'local administrator' => array(
+      'administer group',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function easyddb_editorial_base_og_integration_form_alter(&$form, &$form_state, $form_id) {
