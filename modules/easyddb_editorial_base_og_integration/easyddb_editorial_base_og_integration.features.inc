@@ -7,19 +7,9 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function easyddb_editorial_base_og_integration_ctools_plugin_api() {
-  list($module, $api) = func_get_args();
+function easyddb_editorial_base_og_integration_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
-  }
-}
-
-/**
- * Implements hook_strongarm_alter().
- */
-function easyddb_editorial_base_og_integration_strongarm_alter(&$data) {
-  if (isset($data['og_menu_max_menus_per_group'])) {
-    $data['og_menu_max_menus_per_group']->value = 0; /* WAS: 1 */
   }
 }
 

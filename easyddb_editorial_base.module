@@ -98,17 +98,20 @@ function easyddb_editorial_base_secure_permissions($role) {
       'view editorialbase panels terms',
     ),
     'administrators' => array(
-      'view editorialbase panels terms',
+      'change layouts in place editing',
       'edit terms in 8',
       'delete terms in 8',
+      'use ipe with page manager',
+      'use panels in place editing',
+      'view editorialbase panels terms',
     ),
     'editor' => array(
       'view editorialbase panels terms',
       'use editorialbase panels terms',
-      'use panels in place editing',
-      'change layouts in place editing',
       'edit terms in 8',
       'delete terms in 8',
+      'use ipe with page manager',
+      'use panels in place editing',
     ),
     'guest blogger' => array(
       'view editorialbase panels terms',
@@ -121,19 +124,19 @@ function easyddb_editorial_base_secure_permissions($role) {
       'delete own editorial_base content',
       'administer editorial base',
       'view editorialbase panels terms',
+      'use ipe with page manager',
       'use editorialbase panels terms',
       'use panels in place editing',
-      'change layouts in place editing',
       'edit terms in 8',
       'delete terms in 8',
     ),
     'local editor' => array(
       'view editorialbase panels terms',
       'use editorialbase panels terms',
-      'use panels in place editing',
-      'change layouts in place editing',
       'edit terms in 8',
       'delete terms in 8',
+      'use ipe with page manager',
+      'use panels in place editing',
     ),
     'provider' => array(
       'view editorialbase panels terms',
@@ -179,7 +182,7 @@ function easyddb_editorial_base_entity_view_alter(&$build, $type) {
   }
   $eb_types = variable_get('editorial_base_content_types', array());
 
-  if (in_array($build['#bundle'], $eb_types)) {
+  if (in_array($build['#bundle'], array_filter($eb_types))) {
     $eb_taxonomy_field = field_get_items($type, $build['#node'], 'field_editorial_base');
     $eb_taxonomy = field_view_value($type, $build['#node'], 'field_editorial_base', $eb_taxonomy_field[0]);
     $build['field_editorial_base'] = $eb_taxonomy;

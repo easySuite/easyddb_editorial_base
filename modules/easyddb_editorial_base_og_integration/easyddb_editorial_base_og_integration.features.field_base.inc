@@ -39,6 +39,33 @@ function easyddb_editorial_base_og_integration_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
+  // Exported field_base: 'field_eb_autocreate_og'
+  $field_bases['field_eb_autocreate_og'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_eb_autocreate_og',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
+      ),
+      'allowed_values_function' => '',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
+  );
+
   // Exported field_base: 'og_group_ref_eb'
   $field_bases['og_group_ref_eb'] = array(
     'active' => 1,
@@ -87,7 +114,6 @@ function easyddb_editorial_base_og_integration_field_default_field_bases() {
     'translatable' => 0,
     'type' => 'entityreference',
   );
-
 
   return $field_bases;
 }
