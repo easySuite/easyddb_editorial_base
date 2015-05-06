@@ -6,3 +6,4 @@ package = "easyDDB"
 
 dependencies[] = "easyddb_editorial_base"
 dependencies[] = "panels_ipe"
+dependencies[] = "easyweb_frontend_page"
