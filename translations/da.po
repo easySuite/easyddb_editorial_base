@@ -1,0 +1,233 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  easyddb_editorial_base.admin.inc: n/a
+#  easyddb_editorial_base.api.inc: n/a
+#  easyddb_editorial_base.module: n/a
+#  easyddb_editorial_base.install: n/a
+#  easyddb_editorial_base.info: n/a
+#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info: n/a
+#  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info: n/a
+#  modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info: n/a
+#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc: n/a
+#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module: n/a
+#  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc: n/a
+#  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.module: n/a
+#  modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module: n/a
+#  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.inc: n/a
+#  modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module: n/a
+#  modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-02-19 16:15+0100\n"
+"PO-Revision-Date: 2015-05-15 14:12+0100\n"
+"Last-Translator: Martin Cording <mc@inlead.dk>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Language: da\n"
+"X-Generator: Poedit 1.7.4\n"
+
+#: easyddb_editorial_base.admin.inc:22
+msgid "You do not have any administrative items."
+msgstr ""
+
+#: easyddb_editorial_base.admin.inc:44
+msgid "Available node types"
+msgstr "Tilgængelige indholdstyper:"
+
+#: easyddb_editorial_base.admin.inc:45
+msgid "Select which nodes should be a part of editorial base system"
+msgstr "Vælg hvilke indholdstyper der skal kunne bruges i de Redaktionelle Sektioner."
+
+#: easyddb_editorial_base.admin.inc:112
+msgid "Exception thrown when creating field instance @instance for bundle @bundle."
+msgstr ""
+
+#: easyddb_editorial_base.admin.inc:113
+msgid "Error when creating field instance <strong>@instance</strong> for bundle <strong>@bundle</strong>."
+msgstr ""
+
+#: easyddb_editorial_base.admin.inc:117
+msgid "Field instance @instance for bundle @bundle <strong>created</strong> successfully."
+msgstr ""
+
+#: easyddb_editorial_base.admin.inc:135
+msgid "Field instance @instance for bundle @bundle <strong>deleted</strong> successfully."
+msgstr ""
+
+#: easyddb_editorial_base.api.inc:17
+msgid "Example tab title"
+msgstr ""
+
+#: easyddb_editorial_base.api.inc:23
+msgid "Example checkbox in a tab"
+msgstr ""
+
+#: easyddb_editorial_base.module:16
+msgid "Editorial Base"
+msgstr "Redaktionelle Sektioner"
+
+#: easyddb_editorial_base.module:17
+msgid "Editorial Base settings"
+msgstr "Indstillinger for Redaktionelle Sektioner"
+
+#: easyddb_editorial_base.module:25
+msgid "Content types"
+msgstr ""
+
+#: easyddb_editorial_base.module:26
+msgid "Node bundles that are a part of editorial base system"
+msgstr "Indsholdstyper som skal kunne tilknyttes en Redaktionel Sektion."
+
+#: (duplicate) easyddb_editorial_base.install:97
+msgid "Add section term"
+msgstr "Tilføj en Sektion"
+
+#: easyddb_editorial_base.info:0
+msgid "easyDDB Editorial Base"
+msgstr ""
+
+#: easyddb_editorial_base.info:0
+msgid "Provides integration of content in the editorial base system."
+msgstr ""
+
+#: easyddb_editorial_base.info:0
+#: modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info:0
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
+msgid "easyDDB"
+msgstr ""
+
+#: modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc:72
+#: modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module:37
+msgid "Header image"
+msgstr "Topfrisebillede"
+
+#: modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
+msgid "easyDDB Editorial Base Header Image"
+msgstr ""
+
+#: modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
+msgid "Displays specific header image on EB term page."
+msgstr "Viser et udvalgt billede som topfrisebillede på en Sektion."
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:183
+msgid "Body"
+msgstr ""
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:184
+msgid "Create a term page"
+msgstr "Opret et specifikt Panel til denne Sektion."
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:185
+msgid "Determine if this is an OG group."
+msgstr "Vælg om dette skal være en Gruppe, så der kan styres rettigheder."
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:186
+msgid "Group"
+msgstr "Gruppe"
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:187
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.module:90
+msgid "Groups audience"
+msgstr "Grupper"
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:188
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module:134
+msgid "Term page"
+msgstr "\"Underforside\""
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.inc:32
+msgid "Editorial base OG"
+msgstr ""
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.inc:34
+msgid "Organic Group for editorial base needs"
+msgstr ""
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.inc:36
+msgid "Title"
+msgstr ""
+
+#: modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info:0
+msgid "easyDDB Editorial Base OG integration"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:47
+msgid "Menu settings"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:61
+msgid "Provide a menu link"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:80
+msgid "Menu link title"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:86
+msgid "Description"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:89
+msgid "Shown when hovering over the menu link."
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:103
+msgid "Parent item"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:110
+msgid "Weight"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:113
+msgid "Menu links with smaller weights are displayed before links with larger weights."
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:132
+msgid "@parameter_name not set."
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:148
+msgid "Menu for @term was deleted."
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:168
+msgid "Menu wasn't created"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
+msgid "easyDDB Editorial Base Term Menu"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
+msgid "Create menu for EB term."
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module:85
+msgid "Not possible to create term_view variant. Firstly, you should choose @handler"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module:107
+msgid "Term being viewed has tid \"@tid\""
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module:114
+msgid "Test (@test)"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
+msgid "easyDDB Editorial Base Term Panel"
+msgstr ""
+
+#: modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
+msgid "Generates a new page variant for each created EB term panel."
+msgstr ""
