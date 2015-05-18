@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * easyddb_editorial_base_custom_css.module
+ */
+
+/**
+ * Implements hook_page_alter().
+ * Add custom css on the term view and related node.
+ */
+function easyddb_editorial_base_custom_css_page_alter(&$page) {
+  $css = '';
+  $term = menu_get_object('taxonomy_term', 2);
+  if ($term && $term->vocabulary_machine_name == 'editorial_base') {
+    $css = $term->field_custom_css[LANGUAGE_NONE][0]['value'];
+  }
+  $node = menu_get_object('node', 1);
+  if (isset($node->field_editorial_base)) {
+    $tid = $node->field_editorial_base[LANGUAGE_NONE][0]['tid'];
+    $term = taxonomy_term_load($tid);
+    $css = $term->field_custom_css[LANGUAGE_NONE][0]['value'];
+  }
+  drupal_add_css($css, array('type' => 'inline'));
+}

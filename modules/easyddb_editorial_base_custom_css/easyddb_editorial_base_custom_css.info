@@ -1,0 +1,12 @@
+name = easyDDB Editorial Base Custom CSS
+description = Add custom CSS to Editorial Base term nodes
+core = 7.x
+package = easyDDB
+version = 7.x-1.0
+project = easyddb_editorial_base_custom_css
+dependencies[] = easyddb_editorial_base
+dependencies[] = features
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_custom_css
+features[field_instance][] = taxonomy_term-editorial_base-field_custom_css
