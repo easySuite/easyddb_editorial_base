@@ -30,10 +30,10 @@ function easyddb_editorial_base_custom_css_page_alter(&$page) {
     $css = (!empty($term->field_custom_css)) ? $term->field_custom_css[LANGUAGE_NONE][0]['value'] : $css;
   }
   $node = menu_get_object('node', 1);
-  if (isset($node->field_editorial_base)) {
+  if (isset($node->field_editorial_base) && !empty($node->field_editorial_base)) {
     $tid = $node->field_editorial_base[LANGUAGE_NONE][0]['tid'];
     $term = taxonomy_term_load($tid);
-    $css = $term->field_custom_css[LANGUAGE_NONE][0]['value'];
+    $css = (isset($term->field_custom_css) && !empty($term->field_custom_css)) ? $term->field_custom_css[LANGUAGE_NONE][0]['value'] : FALSE;
   }
   drupal_add_css($css, array('type' => 'inline'));
 }
