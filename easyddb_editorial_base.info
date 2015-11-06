@@ -2,4 +2,4 @@ name = "easyDDB Editorial Base"
 description = "Provides integration of content in the editorial base system."
 package = "easyDDB"
 core = "7.x"
-version = 7.x-2.2.0+easy
+version = 7.x-2.3.1+easy
