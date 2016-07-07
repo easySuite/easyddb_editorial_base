@@ -26,29 +26,28 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
     $term_page = field_get_items('taxonomy_term', $term, 'field_term_page');
     $term_page_old = field_get_items('taxonomy_term', $term->original, 'field_term_page');
 
-    if (!isset($page->handler_info['term_view_panel_context_tid_' . $term->tid])) {
-      return;
-    }
-
     // When unchecked.
     if (($term_page[0]['value'] - $term_page_old[0]['value']) == -1) {
       // Get page.
       $page = 'term_view';
       $page = page_manager_get_page_cache($page);
       // @see page_manager.admin.inc
-      $page->handler_info['term_view_panel_context_tid_' . $term->tid]['disabled'] = TRUE;
-      $page->handler_info['term_view_panel_context_tid_' . $term->tid]['changed'] |= PAGE_MANAGER_CHANGED_STATUS;
+      if (!empty($page->handler_info['term_view_panel_context_tid_' . $term->tid])) {
+        $page->handler_info['term_view_panel_context_tid_' . $term->tid]['disabled'] = TRUE;
+        $page->handler_info['term_view_panel_context_tid_' . $term->tid]['changed'] |= PAGE_MANAGER_CHANGED_STATUS;
+      }
       if ($function = ctools_plugin_get_function($page->subtask, 'enable callback')) {
+
         $result = $function($page, FALSE);
         menu_rebuild();
         page_manager_save_page_cache($page);
       }
     }
-    //When checked
+    // When checked.
     elseif (($term_page[0]['value'] - $term_page_old[0]['value']) == 1) {
 
       // We have 2 variants:
-      // 1) hanlder exists then just enable him;
+      // 1) handler exists then just enable him;
       // 2) we should create new variant.
       $page = 'term_view';
       $task = page_manager_get_task($page);
@@ -70,7 +69,7 @@ function easyddb_editorial_base_term_panel_taxonomy_term_update($term) {
         }
       }
       // Create new handler.
-      else{
+      else {
         easyddb_editorial_base_term_panel_create_term_variant($term);
       }
     }
@@ -87,7 +86,7 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
 
   $handler_name = variable_get('editorial_base_term_panel_handler', 'term_editorial_base_panel_context');
   if (empty($handler_name)) {
-    drupal_set_message(t('Not possible to create term_view variant. Firstly, you should choose @handler', array('@handler' => l('handler', 'admin/config/edbase/term_panel'))), 'warning');
+    drupal_set_message(t('Not possible to create term_view variant. Firstly, you should choose @handler', array('@handler' => l(t('handler'), 'admin/config/section/term_panel'))), 'warning');
     return FALSE;
   }
 
@@ -120,6 +119,8 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
   $handler_name = "term_view_panel_context_tid_{$tid}";
   $variant_title = t('Edtitorial base term (@term)', array('@term' => $term->name));
   $pipeline = module_exists('panels_ipe') ? 'ipe' : 'standard';
+
+  $handler = new stdClass();
   $handler->name = $handler_name;
   $handler->conf['title'] = $variant_title;
   $handler->conf['pipeline'] = $pipeline;
@@ -130,7 +131,7 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
 }
 
 /**
- *  Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
   if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
@@ -144,6 +145,7 @@ function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form,
       '#title' => t('Term page'),
       '#group' => 'section_tabs',
     );
+    $form['field_term_page']['#disabled'] = TRUE;
 
     $form['easyddb_editorial_base']['term_panel']['field_term_page'] = $form['field_term_page'];
     unset($form['field_term_page']);

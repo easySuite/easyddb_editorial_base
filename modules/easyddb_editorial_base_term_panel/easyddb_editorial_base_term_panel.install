@@ -16,52 +16,7 @@ function easyddb_editorial_base_term_panel_install() {
  * Implements hook_uninstall().
  */
 function easyddb_editorial_base_term_panel_uninstall() {
-  easyddb_editorial_base_term_panel_purge_field();
-}
-
-/**
- * Re-create existing section terms panel variants.
- */
-function easyddb_editorial_base_term_panel_update_7001() {
-  $panel_patterns = array(
-    'term_editorial_base_panel_context',
-    'term_view_panel_context_tid_',
-  );
-
-  $task = page_manager_get_task('term_view');
-  $handlers = page_manager_load_task_handlers($task, '');
-
-  foreach ($handlers as $name => $handler) {
-    $delete = FALSE;
-    foreach ($panel_patterns as $pattern) {
-      if (strpos($name, $pattern) !== FALSE) {
-        $delete = TRUE;
-        break;
-      }
-    }
-
-    if ($delete) {
-      page_manager_delete_task_handler($handler);
-    }
-  }
-
-  easyddb_editorial_base_term_panel_create_variant();
-
-  $voc = taxonomy_vocabulary_machine_name_load('editorial_base');
-  $tree = taxonomy_get_tree($voc->vid);
-  $tids = array();
-
-  foreach ($tree as $item) {
-    $tids[] = $item->tid;
-  }
-
-  $terms = entity_load('taxonomy_term', $tids);
-  foreach ($terms as $term) {
-    $entity = entity_metadata_wrapper('taxonomy_term', $term);
-    if ($entity->field_term_page->value()) {
-      easyddb_editorial_base_term_panel_create_term_variant($term);
-    }
-  }
+  ding_sections_term_panel_purge_field();
 }
 
 /**
@@ -99,7 +54,7 @@ function easyddb_editorial_base_term_panel_create_fields() {
     'bundle' => 'editorial_base',
     'default_value' => array(
       0 => array(
-        'value' => 0,
+        'value' => 1,
       ),
     ),
     'deleted' => 0,
