@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * easyddb_editorial_base_header_image.features.inc
+ * Export header image styles.
  */
 
 /**

@@ -75,7 +75,7 @@ function easyddb_editorial_base_admin_content_types_submit($form, $form_state) {
     'default_value' => NULL,
     'widget' => array(
       'type' => 'options_select',
-      'module' => 'otptions',
+      'module' => 'options',
       'active' => 1,
       'settings' => array(),
     ),

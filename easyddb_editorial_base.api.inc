@@ -15,7 +15,8 @@ function hook_section_tabs() {
   $tabs['example_tab'] = array(
     '#type' => 'fieldset',
     '#title' => t('Example tab title'),
-    '#group' => 'section_tabs', // Do not change this.
+    // Do not change this.
+    '#group' => 'section_tabs',
   );
 
   $tabs['example_tab']['example_element'] = array(

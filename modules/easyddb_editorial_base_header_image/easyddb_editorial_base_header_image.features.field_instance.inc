@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * easyddb_editorial_base_header_image.features.field_instance.inc
+ * Provide field header image instance.
  */
 
 /**
@@ -14,7 +14,7 @@ function easyddb_editorial_base_header_image_field_default_field_instances() {
   $field_instances['taxonomy_term-editorial_base-field_header_image'] = array(
     'bundle' => 'editorial_base',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Use image proportional to 1200x90 size.',
     'display' => array(
       'default' => array(
         'label' => 'above',

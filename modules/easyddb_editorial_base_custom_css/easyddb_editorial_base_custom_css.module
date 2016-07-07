@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * easyddb_editorial_base_custom_css.module
+ * Add custom CSS to term pages.
  */
 
 /**
@@ -17,7 +17,7 @@ function easyddb_editorial_base_custom_css_page_alter(&$page) {
     if (isset($menu_item[$key + 1]['router_path'])) {
       if ($menu_item[$key + 1]['router_path'] == 'taxonomy/term/%' && $menu_item[$key + 1] != NULL) {
         $menu_object = menu_get_object('taxonomy_term', '2', $menu_item[$key + 1]['link_path']);
-        if ($menu_object->vocabulary_machine_name == 'editorial_base' && !empty($menu_object->field_custom_css)) {
+        if ($menu_object && $menu_object->vocabulary_machine_name == 'editorial_base' && !empty($menu_object->field_custom_css)) {
           $css = $menu_object->field_custom_css[LANGUAGE_NONE][0]['value'];
           break;
         }

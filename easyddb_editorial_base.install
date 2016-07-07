@@ -13,6 +13,14 @@ function easyddb_editorial_base_install() {
   easyddb_editorial_base_section_shortcut();
 
   variable_set('editorial_base_content_types', array());
+
+  $submodules = array(
+    'easyddb_editorial_base_header_image',
+    'easyddb_editorial_base_term_menu',
+    'easyddb_editorial_base_term_panel',
+    'easyddb_editorial_base_custom_css',
+  );
+  module_enable($submodules);
 }
 
 /**
@@ -37,7 +45,9 @@ function _easyddb_editorial_base_create_base() {
 }
 
 /**
- * Create the field to be used in node bundles,
+ * Create custom editorial base field.
+
+ * The field to be used in node bundles,
  * to link content to editorial base vocabulary.
  */
 function _easyddb_editorial_base_create_fields() {
@@ -87,13 +97,6 @@ function _easyddb_editorial_base_purge_base() {
 }
 
 /**
- * Add a default shortcut to section term creation page.
- */
-function easyddb_editorial_base_update_7000() {
-  easyddb_editorial_base_section_shortcut();
-}
-
-/**
  * Create a link in shortcut menu bar.
  */
 function easyddb_editorial_base_section_shortcut() {
@@ -105,8 +108,8 @@ function easyddb_editorial_base_section_shortcut() {
 
   $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
   $shortcut_set->links[] = array(
-    'link_path' => 'admin/structure/taxonomy/editorial_base/add',
-    'link_title' => $t('Add section term'),
+    'link_path' => 'admin/structure/taxonomy/editorial_base',
+    'link_title' => $t('Sections'),
   );
 
   shortcut_set_save($shortcut_set);
@@ -115,14 +118,14 @@ function easyddb_editorial_base_section_shortcut() {
 /**
  * Check if section shortcut link already exists.
  *
- * @return boolean
+ * @return bool
  *   TRUE if the link exists, FALSE otherwise.
  */
 function easyddb_editorial_base_section_shortcut_exists() {
   $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
 
   foreach ($shortcut_set->links as $link) {
-    if ($link['link_path'] == 'admin/structure/taxonomy/editorial_base/add') {
+    if ($link['link_path'] == 'admin/structure/taxonomy/editorial_base') {
       return TRUE;
     }
   }

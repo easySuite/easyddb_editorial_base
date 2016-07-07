@@ -1,11 +1,14 @@
 <?php
 /**
  * @file
- *
+ * Provide functionality for section header image.
  */
+
+include_once 'easyddb_editorial_base_header_image.features.inc';
 
 /**
  * Implements hook_page_alter().
+ *
  * Sets specific header image for taxonomy term page.
  */
 function easyddb_editorial_base_header_image_page_alter(&$page) {
@@ -14,8 +17,10 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
     $lang = field_language('taxonomy_term', $term, 'field_header_image');
     if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
       $image = $term->field_header_image[$lang][0];
+      if (!empty($image['uri'])) {
+        $url = image_style_url('editorial_base_header_image', $image['uri']);
+      }
       // Set specific background.
-      $url = image_style_url('editorial_base_header_image', $image['uri']);
       if (!empty($url)) {
         $css = ".topbar-inner {
           background-image: url({$url}) !important;
@@ -27,7 +32,7 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
 }
 
 /**
- *  Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  */
 function easyddb_editorial_base_header_image_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
   if (!isset($form['#bundle']) || $form['#bundle'] != 'editorial_base') {
@@ -45,5 +50,3 @@ function easyddb_editorial_base_header_image_form_taxonomy_form_term_alter(&$for
     unset($form['field_header_image']);
   }
 }
-
-include_once 'easyddb_editorial_base_header_image.features.inc';
