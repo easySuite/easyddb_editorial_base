@@ -16,7 +16,7 @@ function easyddb_editorial_base_term_panel_install() {
  * Implements hook_uninstall().
  */
 function easyddb_editorial_base_term_panel_uninstall() {
-  ding_sections_term_panel_purge_field();
+  easyddb_editorial_base_term_panel_purge_field();
 }
 
 /**

@@ -99,7 +99,7 @@ function easyddb_editorial_base_term_menu_form_taxonomy_form_term_alter(&$form, 
       '#disabled' => TRUE,
     );
 
-    $form['section']['link']['path'] = array(
+    $form['editorial_base']['link']['path'] = array(
       '#type' => 'textfield',
       '#title' => t('Path'),
       '#default_value' => $link['path'],
@@ -167,7 +167,7 @@ function easyddb_editorial_base_term_submit($form, $form_state) {
   if (isset($term->tid)) {
     $tid = $term->tid;
     $mlid = _easyddb_editorial_base_menu_exist($tid);
-    if ($form_state['values']['section']['enabled'] == 0) {
+    if ($form_state['values']['editorial_base']['enabled'] == 0) {
       if ($mlid) {
         _easyddb_editorial_base_remove_term_menu($tid, $mlid);
         drupal_set_message(t('Menu for @term was deleted.', array('@term' => $term->name)), 'status');

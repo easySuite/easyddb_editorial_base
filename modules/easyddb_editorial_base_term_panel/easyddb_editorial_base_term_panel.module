@@ -86,7 +86,7 @@ function easyddb_editorial_base_term_panel_create_term_variant($term) {
 
   $handler_name = variable_get('editorial_base_term_panel_handler', 'term_editorial_base_panel_context');
   if (empty($handler_name)) {
-    drupal_set_message(t('Not possible to create term_view variant. Firstly, you should choose @handler', array('@handler' => l(t('handler'), 'admin/config/section/term_panel'))), 'warning');
+    drupal_set_message(t('Not possible to create term_view variant. Firstly, you should choose @handler', array('@handler' => l(t('handler'), 'admin/config/edbase/term_panel'))), 'warning');
     return FALSE;
   }
 

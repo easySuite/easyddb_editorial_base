@@ -118,7 +118,7 @@ function easyddb_editorial_base_section_shortcut() {
 /**
  * Check if section shortcut link already exists.
  *
- * @return boole
+ * @return bool
  *   TRUE if the link exists, FALSE otherwise.
  */
 function easyddb_editorial_base_section_shortcut_exists() {

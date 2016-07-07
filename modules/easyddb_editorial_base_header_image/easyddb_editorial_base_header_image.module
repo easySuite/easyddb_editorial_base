@@ -4,7 +4,7 @@
  * Provide functionality for section header image.
  */
 
-include_once 'ding_sections_header_image.features.inc';
+include_once 'easyddb_editorial_base_header_image.features.inc';
 
 /**
  * Implements hook_page_alter().
@@ -18,7 +18,7 @@ function easyddb_editorial_base_header_image_page_alter(&$page) {
     if (isset($term->field_header_image[$lang][0]) && !empty($term->field_header_image[$lang][0])) {
       $image = $term->field_header_image[$lang][0];
       if (!empty($image['uri'])) {
-        $url = image_style_url('section_header_image', $image['uri']);
+        $url = image_style_url('editorial_base_header_image', $image['uri']);
       }
       // Set specific background.
       if (!empty($url)) {
