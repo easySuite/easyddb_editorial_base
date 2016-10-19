@@ -34,12 +34,47 @@ function easyddb_editorial_base_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function easyddb_editorial_base_theme($existing, $type, $theme, $path) {
+  return array(
+    'editorial_base_term_widget' => array(
+      'variables' => array(
+        'description' => NULL,
+        'image' => NULL,
+      ),
+      'template' => 'editorial-base-term-widget',
+      'path' => $path . '/templates',
+    ),
+  );
+}
+
+/**
  * Implements hook_ctools_plugin_directory().
  */
 function easyddb_editorial_base_ctools_plugin_directory($owner, $plugin_type) {
   if ($owner == 'ctools' && $plugin_type == 'content_types') {
     return 'plugins/content_types';
   }
+}
+
+function easyddb_editorial_base_section_list_content_type_render($subtype, $conf, $panel_args, $context) {
+  $block = new stdClass();
+  $block->content = '';
+
+  $term = entity_metadata_wrapper('taxonomy_term', reset($panel_args));
+  if (!$term) {
+    return false;
+  }
+
+  $image = $term->field_eb_section_content_image->value();
+
+  $block->content = theme('editorial_base_term_widget', array(
+    'description' => $term->field_eb_section_summary_text->value(),
+    'image' => image_style_url('ding_list_large', $image['uri']),
+  ));
+
+  return $block;
 }
 
 /**
