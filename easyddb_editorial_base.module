@@ -58,20 +58,30 @@ function easyddb_editorial_base_ctools_plugin_directory($owner, $plugin_type) {
   }
 }
 
+/**
+ * Callback function to render plugin content.
+ *
+ * @param $subtype
+ * @param $conf
+ * @param $panel_args
+ * @param $context
+ *
+ * @return \stdClass
+ */
 function easyddb_editorial_base_section_list_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
   $block->content = '';
 
   $term = entity_metadata_wrapper('taxonomy_term', reset($panel_args));
   if (!$term) {
-    return false;
+    return $block;
   }
 
   $image = $term->field_eb_section_content_image->value();
 
   $block->content = theme('editorial_base_term_widget', array(
     'description' => $term->field_eb_section_summary_text->value(),
-    'image' => image_style_url('ding_list_large', $image['uri']),
+    'image' => image_style_url('editorial_base_content_image', $image['uri']),
   ));
 
   return $block;

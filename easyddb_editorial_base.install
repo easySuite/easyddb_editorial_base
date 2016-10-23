@@ -11,6 +11,7 @@ function easyddb_editorial_base_install() {
   _easyddb_editorial_base_create_base();
   _easyddb_editorial_base_create_fields();
   easyddb_editorial_base_section_shortcut();
+  easyddb_editorial_base_create_image_style();
 
   variable_set('editorial_base_content_types', array());
 }
@@ -21,6 +22,7 @@ function easyddb_editorial_base_install() {
 function easyddb_editorial_base_uninstall() {
   _easyddb_editorial_base_purge_fields();
   _easyddb_editorial_base_purge_base();
+  image_style_delete(image_style_load('editorial_base_content_image'));
 
   variable_del('editorial_base_content_types');
 }
@@ -251,6 +253,13 @@ function easyddb_editorial_base_update_7000() {
 }
 
 /**
+ * Create image style for term content image.
+ */
+function easyddb_editorial_base_update_7001() {
+  easyddb_editorial_base_create_image_style();
+}
+
+/**
  * Create a link in shortcut menu bar.
  */
 function easyddb_editorial_base_section_shortcut() {
@@ -285,4 +294,21 @@ function easyddb_editorial_base_section_shortcut_exists() {
   }
 
   return FALSE;
+}
+
+/**
+ * Create image style for term image.
+ */
+function easyddb_editorial_base_create_image_style() {
+  $style = image_style_save(array('name' => 'editorial_base_content_image'));
+
+  $effect = array(
+    'name' => 'image_scale_and_crop',
+    'data' => array(
+      'width' => 880,
+      'height' => 520,
+    ),
+    'isid' => $style['isid'],
+  );
+  image_effect_save($effect);
 }
