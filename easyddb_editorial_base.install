@@ -11,6 +11,7 @@ function easyddb_editorial_base_install() {
   _easyddb_editorial_base_create_base();
   _easyddb_editorial_base_create_fields();
   easyddb_editorial_base_section_shortcut();
+  easyddb_editorial_base_create_image_style();
 
   variable_set('editorial_base_content_types', array());
 }
@@ -21,6 +22,7 @@ function easyddb_editorial_base_install() {
 function easyddb_editorial_base_uninstall() {
   _easyddb_editorial_base_purge_fields();
   _easyddb_editorial_base_purge_base();
+  image_style_delete(image_style_load('editorial_base_content_image'));
 
   variable_del('editorial_base_content_types');
 }
@@ -34,6 +36,163 @@ function _easyddb_editorial_base_create_base() {
   $voc->machine_name = 'editorial_base';
 
   taxonomy_vocabulary_save($voc);
+
+  $vocab_field_base = array(
+    'field_eb_section_summary_text' => array(
+      'active' => 1,
+      'cardinality' => 1,
+      'deleted' => 0,
+      'entity_types' => array(),
+      'field_name' => 'field_eb_section_summary_text',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => 0,
+      'module' => 'text',
+      'settings' => array(
+        'profile2_private' => FALSE,
+      ),
+      'translatable' => 0,
+      'type' => 'text_long',
+    ),
+    'field_eb_section_content_image' => array(
+      'active' => 1,
+      'cardinality' => 1,
+      'deleted' => 0,
+      'entity_types' => array(),
+      'field_name' => 'field_eb_section_content_image',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => 0,
+      'module' => 'image',
+      'settings' => array(
+        'default_image' => 0,
+        'profile2_private' => FALSE,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => 0,
+      'type' => 'image',
+    ),
+  );
+
+  $vocab_field_instance = array(
+    'taxonomy_term-editorial_base-field_eb_section_summary_text' => array(
+      'bundle' => 'editorial_base',
+      'default_value' => NULL,
+      'deleted' => 0,
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 4,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_eb_section_summary_text',
+      'label' => 'Summary',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => 1,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'rows' => 5,
+        ),
+        'type' => 'text_textarea',
+        'weight' => 3,
+      ),
+    ),
+    'taxonomy_term-editorial_base-field_eb_section_content_image' => array(
+      'bundle' => 'editorial_base',
+      'deleted' => 0,
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 3,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_eb_section_content_image',
+      'label' => 'Content image.',
+      'required' => 0,
+      'settings' => array(
+        'alt_field' => 0,
+        'default_image' => 0,
+        'file_directory' => '',
+        'file_extensions' => 'png gif jpg jpeg',
+        'max_filesize' => '',
+        'max_resolution' => '',
+        'min_resolution' => '',
+        'title_field' => 0,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'media',
+        'settings' => array(
+          'allowed_schemes' => array(
+            'public' => 'public',
+            'vimeo' => 0,
+            'youtube' => 0,
+          ),
+          'allowed_types' => array(
+            'audio' => 0,
+            'document' => 0,
+            'image' => 'image',
+            'video' => 0,
+          ),
+          'browser_plugins' => array(
+            'ding_content' => 0,
+            'media_default--media_browser_1' => 'media_default--media_browser_1',
+            'media_default--media_browser_my_files' => 0,
+            'media_internet' => 0,
+            'upload' => 'upload',
+            'youtube' => 0,
+          ),
+        ),
+        'type' => 'media_generic',
+        'weight' => 3,
+      ),
+    ),
+  );
+
+  foreach ($vocab_field_base as $field_base) {
+    field_create_field($field_base);
+  }
+
+  foreach ($vocab_field_instance as $field_instance) {
+    field_create_instance($field_instance);
+  }
 }
 
 /**
@@ -94,6 +253,13 @@ function easyddb_editorial_base_update_7000() {
 }
 
 /**
+ * Create image style for term content image.
+ */
+function easyddb_editorial_base_update_7001() {
+  easyddb_editorial_base_create_image_style();
+}
+
+/**
  * Create a link in shortcut menu bar.
  */
 function easyddb_editorial_base_section_shortcut() {
@@ -128,4 +294,21 @@ function easyddb_editorial_base_section_shortcut_exists() {
   }
 
   return FALSE;
+}
+
+/**
+ * Create image style for term image.
+ */
+function easyddb_editorial_base_create_image_style() {
+  $style = image_style_save(array('name' => 'editorial_base_content_image'));
+
+  $effect = array(
+    'name' => 'image_scale_and_crop',
+    'data' => array(
+      'width' => 880,
+      'height' => 520,
+    ),
+    'isid' => $style['isid'],
+  );
+  image_effect_save($effect);
 }
