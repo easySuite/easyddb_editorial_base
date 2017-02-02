@@ -77,11 +77,14 @@ function easyddb_editorial_base_section_list_content_type_render($subtype, $conf
     return $block;
   }
 
-  $image = $term->field_eb_section_content_image->value();
+  $img_content = $term->field_eb_section_content_image->value();
+  $image = ($img_content)
+    ? image_style_url('editorial_base_content_image', $img_content['uri'])
+    : null;
 
   $block->content = theme('editorial_base_term_widget', array(
     'description' => $term->field_eb_section_summary_text->value(),
-    'image' => image_style_url('editorial_base_content_image', $image['uri']),
+    'image' => $image,
   ));
 
   return $block;
