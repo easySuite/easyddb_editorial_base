@@ -1,5 +1,5 @@
 name = "easyDDB Editorial Base"
 description = "Provides integration of content in the editorial base system."
-package = "easyDDB"
+package = "easyOPAC"
 core = "7.x"
-version = 7.x-2.3.1+easy
+version = 7.x-3.0.2
