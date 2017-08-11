@@ -65,6 +65,20 @@ function easyddb_editorial_base_term_panel_update_7001() {
 }
 
 /**
+ * Save handler pipeline.
+ */
+function easyddb_editorial_base_term_panel_update_7002() {
+  // Load my task plugin
+  $task = page_manager_get_task('term_view');
+  $handlers = page_manager_load_sorted_handlers($task, '', TRUE);
+  $handler = $handlers['term_editorial_base_panel_context'];
+  if (!empty($handler)) {
+    $handler->conf['pipeline'] = 'standard';
+  }
+  page_manager_save_task_handler($handler);
+}
+
+/**
  * Create term panel checkbox field and instance.
  */
 function easyddb_editorial_base_term_panel_create_fields() {
@@ -160,7 +174,7 @@ function easyddb_editorial_base_term_panel_create_variant() {
   $handler->conf = array(
     'title' => 'Editorial base term panel',
     'no_blocks' => 0,
-    'pipeline' => 'ipe',
+    'pipeline' => 'standard',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
