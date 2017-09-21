@@ -9,13 +9,10 @@
 #  profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.install: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.info: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info: n/a
-#  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.features.field_instance.inc: n/a
-#  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc: n/a
-#  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.module: n/a
 #  profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.inc: n/a
@@ -87,7 +84,7 @@ msgstr ""
 msgid "Node bundles that are a part of editorial base system"
 msgstr ""
 
-#: (duplicate) profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.install:109 
+#: (duplicate) profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.install:109
 msgid "Add section term"
 msgstr ""
 
@@ -113,18 +110,6 @@ msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0
 msgid "Add custom CSS to Editorial Base term nodes"
-msgstr ""
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc:72 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module:41
-msgid "Header image"
-msgstr ""
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
-msgid "easyDDB Editorial Base Header Image"
-msgstr ""
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
-msgid "Displays specific header image on EB term page."
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:220
