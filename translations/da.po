@@ -8,11 +8,8 @@
 #  easyddb_editorial_base.module: n/a
 #  easyddb_editorial_base.install: n/a
 #  easyddb_editorial_base.info: n/a
-#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info: n/a
 #  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info: n/a
 #  modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info: n/a
-#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc: n/a
-#  modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module: n/a
 #  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc: n/a
 #  modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.module: n/a
 #  modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.module: n/a
@@ -101,7 +98,6 @@ msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.info:0
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info:0
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
@@ -119,19 +115,6 @@ msgstr "Specielle stilarter"
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0
 msgid "Add custom CSS to Editorial Base term nodes"
 msgstr "Tilføj specielle stilarter til indhold i en Sektion"
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.features.field_instance.inc:72
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.module:41
-msgid "Header image"
-msgstr "Topfrisebillede"
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
-msgid "easyDDB Editorial Base Header Image"
-msgstr "Topfrisebillede"
-
-#: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0
-msgid "Displays specific header image on EB term page."
-msgstr "Viser et udvalgt billede som topfrisebillede på en Sektion."
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.features.field_instance.inc:220
 msgid "Auto create new OG"
