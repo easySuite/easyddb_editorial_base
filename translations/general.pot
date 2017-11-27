@@ -89,7 +89,7 @@ msgid "Add section term"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.info:0
-msgid "easyDDB Editorial Base"
+msgid "easyOPAC Editorial Base"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.info:0
@@ -97,7 +97,7 @@ msgid "Provides integration of content in the editorial base system."
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/easyddb_editorial_base.info:0 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_header_image/easyddb_editorial_base_header_image.info:0 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info:0 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0 profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
-msgid "easyDDB"
+msgid "easyOPAC"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.features.field_instance.inc:49
@@ -105,7 +105,7 @@ msgid "Custom CSS"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0
-msgid "easyDDB Editorial Base Custom CSS"
+msgid "easyOPAC Editorial Base Custom CSS"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_custom_css/easyddb_editorial_base_custom_css.info:0
@@ -149,7 +149,7 @@ msgid "Term page"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_og_integration/easyddb_editorial_base_og_integration.info:0
-msgid "easyDDB Editorial Base OG integration"
+msgid "easyOPAC Editorial Base OG integration"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.module:51
@@ -197,7 +197,7 @@ msgid "Menu wasn't created"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
-msgid "easyDDB Editorial Base Term Menu"
+msgid "easyOPAC Editorial Base Term Menu"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_menu/easyddb_editorial_base_term_menu.info:0
@@ -217,7 +217,7 @@ msgid "Edtitorial base term (@term)"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
-msgid "easyDDB Editorial Base Term Panel"
+msgid "easyOPAC Editorial Base Term Panel"
 msgstr ""
 
 #: profiles/ding2/modules/easyddb_editorial_base/modules/easyddb_editorial_base_term_panel/easyddb_editorial_base_term_panel.info:0
