@@ -1,10 +1,10 @@
-easyDDB Editorial Base Term Menu
+easyOPAC Editorial Base Term Menu
 ==========
 
 This module add possibility to create menu item in Editorial Base menu.
 
 ## Requirements:
-easyDDB Editorial Base module should be enabled.
+easyOPAC Editorial Base module should be enabled.
 
 ## Configuration:
 Enable module on @/admin/modules page list.

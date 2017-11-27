@@ -1,7 +1,7 @@
-name = easyDDB Editorial Base Custom CSS
+name = easyOPAC Editorial Base Custom CSS
 description = Add custom CSS to Editorial Base term nodes
 core = 7.x
-package = easyDDB
+package = easyOPAC
 version = 7.x-1.0
 project = easyddb_editorial_base_custom_css
 dependencies[] = easyddb_editorial_base

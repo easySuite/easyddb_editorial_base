@@ -1,10 +1,10 @@
-easyDDB Editorial Base OG integration
+easyOPAC Editorial Base OG integration
 ==========
 
-This module integrates easyDDB Editorial Base with Organic Group (OG) functionality.
+This module integrates easyOPAC Editorial Base with Organic Group (OG) functionality.
 
 ## Requirements:
-easyDDB Editorial Base module should be enabled.
+easyOPAC Editorial Base module should be enabled.
 
 ## Configuration:
 Enable module on @/admin/modules page list.

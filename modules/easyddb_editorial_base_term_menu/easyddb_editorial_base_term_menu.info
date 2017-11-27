@@ -1,6 +1,6 @@
-name = "easyDDB Editorial Base Term Menu"
+name = "easyOPAC Editorial Base Term Menu"
 description = "Create menu for EB term."
-package = "easyDDB"
+package = "easyOPAC"
 core = "7.x"
 version = "7.x-0.1"
 
