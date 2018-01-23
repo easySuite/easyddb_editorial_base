@@ -1,6 +1,6 @@
-name = easyDDB Editorial Base OG integration
+name = easyOPAC Editorial Base OG integration
 core = 7.x
-package = easyDDB
+package = easyOPAC
 version = 7.x-0.1
 project = easyddb_editorial_base_og_integration
 dependencies[] = ctools

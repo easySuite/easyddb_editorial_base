@@ -9,5 +9,5 @@ $plugin = array(
   'description' => t('Display image and description for current term of section vocabulary.'),
   'single' => TRUE,
   'render callback' => 'easyddb_editorial_base_section_list_content_type_render',
-  'category' => t('easyDDB'),
+  'category' => t('easyOPAC'),
 );

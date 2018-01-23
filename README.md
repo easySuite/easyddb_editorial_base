@@ -1,4 +1,4 @@
-easyDDB Editorial Base
+easyOPAC Editorial Base
 ==========
 
 Using this module you will be able to create separate sections for different subjects.
