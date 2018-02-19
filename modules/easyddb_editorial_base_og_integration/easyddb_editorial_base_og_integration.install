@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Perform install/uninstall functionality.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function easyddb_editorial_base_og_integration_uninstall() {
+  $type = 'editorial_base';
+  if (node_type_load($type)) {
+    // Remove all related nodes.
+    $results = db_select('node', 'n')
+      ->fields('n', array('nid'))
+      ->condition('type', $type)
+      ->execute();
+    foreach ($results as $result) {
+      $nids[] = $result->nid;
+    }
+
+    if (!empty($nids)) {
+      node_delete_multiple($nids);
+    }
+
+    // Remove CT.
+    node_type_delete('editorial_base');
+    variable_del('node_preview_' . $type);
+  }
+}
