@@ -10,7 +10,7 @@
 function easyddb_editorial_base_install() {
   _easyddb_editorial_base_create_base();
   _easyddb_editorial_base_create_fields();
-  easyddb_editorial_base_section_shortcut();
+  easyddb_editorial_base_section_shortcut_create();
   easyddb_editorial_base_create_image_style();
 
   variable_set('editorial_base_content_types', array());
@@ -23,6 +23,7 @@ function easyddb_editorial_base_uninstall() {
   _easyddb_editorial_base_purge_fields();
   _easyddb_editorial_base_purge_base();
   image_style_delete(image_style_load('editorial_base_content_image'));
+  easyddb_editorial_base_section_shortcut_delete();
 
   variable_del('editorial_base_content_types');
 }
@@ -249,7 +250,7 @@ function _easyddb_editorial_base_purge_base() {
  * Add a default shortcut to section term creation page.
  */
 function easyddb_editorial_base_update_7000() {
-  easyddb_editorial_base_section_shortcut();
+  easyddb_editorial_base_section_shortcut_create();
 }
 
 /**
@@ -262,7 +263,7 @@ function easyddb_editorial_base_update_7001() {
 /**
  * Create a link in shortcut menu bar.
  */
-function easyddb_editorial_base_section_shortcut() {
+function easyddb_editorial_base_section_shortcut_create() {
   if (easyddb_editorial_base_section_shortcut_exists()) {
     return;
   }
@@ -274,6 +275,26 @@ function easyddb_editorial_base_section_shortcut() {
     'link_path' => 'admin/structure/taxonomy/editorial_base/add',
     'link_title' => $t('Add section term'),
   );
+
+  shortcut_set_save($shortcut_set);
+}
+
+/**
+ * Delete link from the shortcut menu bar.
+ */
+function easyddb_editorial_base_section_shortcut_delete() {
+  if (easyddb_editorial_base_section_shortcut_exists()) {
+    return;
+  }
+
+  $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+  foreach ($shortcut_set->links as $key => &$link) {
+    if ($link['link_path'] == 'admin/structure/taxonomy/editorial_base/add') {
+      menu_link_delete($link['mlid']);
+      unset($shortcut_set->links[$key]);
+      break;
+    }
+  }
 
   shortcut_set_save($shortcut_set);
 }
