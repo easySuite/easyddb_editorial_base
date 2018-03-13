@@ -17,6 +17,7 @@ function easyddb_editorial_base_term_panel_install() {
  */
 function easyddb_editorial_base_term_panel_uninstall() {
   easyddb_editorial_base_term_panel_purge_field();
+  easyddb_editorial_base_term_panel_delete_variant();
 }
 
 /**
@@ -538,4 +539,22 @@ function easyddb_editorial_base_term_panel_create_variant() {
   $handler->conf['display'] = $display;
 
   page_manager_save_task_handler($handler);
+}
+
+/**
+ * Delete panel variants.
+ */
+function easyddb_editorial_base_term_panel_delete_variant() {
+  ctools_include('export');
+
+  $vocabulary = taxonomy_vocabulary_machine_name_load('editorial_base');
+  $terms = entity_load('taxonomy_term', FALSE, array('vid' => $vocabulary->vid));
+  foreach ($terms as $term) {
+    $name = 'term_view_panel_context_tid_' . $term->tid;
+    $page = ctools_export_crud_load('page_manager_handlers', $name);
+    ctools_export_crud_delete('page_manager_handlers', $page);
+  }
+
+  $page = ctools_export_crud_load('page_manager_handlers', 'term_editorial_base_panel_context');
+  ctools_export_crud_delete('page_manager_handlers', $page);
 }
