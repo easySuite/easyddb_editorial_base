@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Editorial dashboard module.
@@ -61,12 +62,7 @@ function easyddb_editorial_base_ctools_plugin_directory($owner, $plugin_type) {
 /**
  * Callback function to render plugin content.
  *
- * @param $subtype
- * @param $conf
- * @param $panel_args
- * @param $context
- *
- * @return \stdClass
+ * @throws \Exception
  */
 function easyddb_editorial_base_section_list_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
@@ -80,7 +76,7 @@ function easyddb_editorial_base_section_list_content_type_render($subtype, $conf
   $img_content = $term->field_eb_section_content_image->value();
   $image = ($img_content)
     ? image_style_url('editorial_base_content_image', $img_content['uri'])
-    : null;
+    : NULL;
 
   $block->content = theme('editorial_base_term_widget', array(
     'description' => $term->field_eb_section_summary_text->value(),
@@ -103,7 +99,8 @@ function easyddb_editorial_base_menu_alter(&$items) {
  *
  * @param object $voc
  *   Loaded vocabulary.
- * @return boolean
+ *
+ * @return bool
  *   Access value.
  *
  * @see easyddb_editorial_base_menu_alter()
@@ -129,7 +126,7 @@ function easyddb_editorial_base_permission() {
 
   $perm['administer editorial base'] = array(
     'title' => 'Administer editorial base',
-    'description' => 'Change various editorial base settings'
+    'description' => 'Change various editorial base settings',
   );
 
   $perm['view editorialbase panels terms'] = array(
@@ -144,7 +141,7 @@ function easyddb_editorial_base_permission() {
 }
 
 /**
- *  Implements hook_secure_permissions().
+ * Implements hook_secure_permissions().
  */
 function easyddb_editorial_base_secure_permissions($role) {
   $permissions = array(
@@ -207,8 +204,8 @@ function easyddb_editorial_base_secure_permissions($role) {
   }
 }
 
-/*
- * Implement hook_form_FORM_ID_alter().
+/**
+ * Implements hook_form_FORM_ID_alter().
  *
  * Alter taxonomy term (section) form.
  */
@@ -218,7 +215,7 @@ function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_sta
   }
 
   $form['section_tabs'] = array(
-    '#type' => 'vertical_tabs'
+    '#type' => 'vertical_tabs',
   );
 
   $tabs = module_invoke_all('section_tabs');
@@ -228,4 +225,60 @@ function easyddb_editorial_base_form_taxonomy_form_term_alter(&$form, &$form_sta
   }
 
   $form['relations']['#group'] = 'section_tabs';
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function easyddb_editorial_base_preprocess(&$variables, $hook) {
+  // Process nodes with sections.
+  if ($hook == 'node') {
+    if (!empty($variables['field_editorial_base'])) {
+      $tid = $variables['field_editorial_base'][LANGUAGE_NONE][0]['tid'];
+      $nid = $variables['nid'];
+      $variables['classes_array'][] = 'section-' . $tid . '-' . $nid;
+    }
+  }
+
+  // Process ding_event_calendar events list.
+  if ($hook == 'ding_events_list') {
+    $items = $variables['items'];
+
+    $event_list_items = [];
+    foreach ($items as $item) {
+      if (!empty($item->field_editorial_base)) {
+        $tid = $item->field_editorial_base['und'][0]['tid'];
+        $nid = $item->nid;
+        $event_list_items[] = 'section-' . $tid . '-' . $nid;
+      }
+    }
+
+    drupal_add_js(['easyddb_editorial_base' => ['eb_event_list_items' => $event_list_items]], 'setting');
+    drupal_add_js(drupal_get_path('module', 'easyddb_editorial_base') . '/js/easyddb_editorial_base.js', 'file');
+  }
+
+  // Process ding_nodelist widgets.
+  if (strpos($hook, 'ding_nodelist_widget') !== FALSE) {
+    $nodelist_items = [];
+    $items = $variables['items'];
+    $classes = explode(' ', $variables['conf']['classes']);
+    $widget_unique = $classes[3];
+
+    foreach ($items as $item) {
+      if (!empty($item->field_editorial_base)) {
+        $tid = $item->field_editorial_base['und'][0]['tid'];
+        $nid = $item->nid;
+        // Set concatenation of hook name and nodelist_id in order as a key for
+        // correct pane processing.
+        $nodelist_items[$hook . ':' . $widget_unique][] = 'section-' . $tid . '-' . $nid;
+      }
+      else {
+        // Pass "empty" value in order to keep order.
+        $nodelist_items[$hook . ':' . $widget_unique][] = 'empty';
+      }
+    }
+
+    drupal_add_js(['easyddb_editorial_base' => ['nodelist_items' => $nodelist_items]], 'setting');
+    drupal_add_js(drupal_get_path('module', 'easyddb_editorial_base') . '/js/easyddb_editorial_base.js', 'file');
+  }
 }
