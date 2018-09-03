@@ -129,5 +129,14 @@ function easyddb_editorial_base_og_integration_strongarm() {
   $strongarm->value = 1;
   $export['node_submitted_editorial_base'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'og_group_manager_default_rids_node_editorial_base';
+  $strongarm->value = array(
+    9 => '9',
+  );
+  $export['og_group_manager_default_rids_node_editorial_base'] = $strongarm;
+
   return $export;
 }
