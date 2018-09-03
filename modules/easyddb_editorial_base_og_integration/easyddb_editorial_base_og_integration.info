@@ -41,6 +41,6 @@ features[variable][] = menu_parent_editorial_base
 features[variable][] = node_options_editorial_base
 features[variable][] = node_preview_editorial_base
 features[variable][] = node_submitted_editorial_base
+features[variable][] = og_group_manager_default_rids_node_editorial_base
 features_exclude[field][node-editorial_base-body] = node-editorial_base-body
 features_exclude[field][node-editorial_base-group_group] = node-editorial_base-group_group
-mtime = 1429001244
