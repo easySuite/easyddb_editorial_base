@@ -28,3 +28,23 @@ function easyddb_editorial_base_og_integration_uninstall() {
     variable_del('node_preview_' . $type);
   }
 }
+
+/**
+ * Update OG
+ */
+function easyddb_editorial_base_og_integration_update_7001() {
+  $roles = array(
+    array(
+      'rid' => 7,
+      'permission' => 'subscribe without approval',
+      'module' => 'og_ui',
+    ),
+  );
+
+  foreach ($roles as $role) {
+    db_insert('og_role_permission')
+      ->fields($role)
+      ->execute();
+  }
+
+}
