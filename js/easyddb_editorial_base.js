@@ -38,6 +38,9 @@
           else if (split_array[0] === '_ding_nodelist_widget_promoted_nodes') {
             nodelist_group = $('.' + split_array[1]).find('.ding_nodelist-pn-item');
           }
+          else if (split_array[0] === '_ding_nodelist_widget_carousel') {
+            nodelist_group = $('.' + split_array[1]).find('.ding_nodelist-items .slick-list .slick-track').children();
+          }
           else {
             nodelist_group = $('.' + split_array[1]).find('.ding_nodelist-items').children();
           }
