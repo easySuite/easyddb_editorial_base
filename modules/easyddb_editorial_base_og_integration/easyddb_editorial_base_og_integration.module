@@ -188,3 +188,16 @@ function easyddb_editorial_base_og_integration_auto_create_og_submit(&$form, &$f
   ));
 }
 
+/**
+ * Implements hook_taxonomy_term_delete().
+ */
+function easyddb_editorial_base_og_integration_taxonomy_term_delete($term) {
+  if ($term->vocabulary_machine_name == 'editorial_base') {
+    $field = field_get_items('taxonomy_term', $term, 'og_group_ref_eb');
+    if (!empty($field)) {
+      $tid = $field[0]['target_id'];
+      // Delete "Editorial base OG" node assigned to this term.
+      node_delete($tid);
+    }
+  }
+}
