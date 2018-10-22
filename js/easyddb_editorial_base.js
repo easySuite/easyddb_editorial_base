@@ -29,16 +29,16 @@
           let split_array = unique_id.split(':');
 
           // Process nodelist widgets.
-          if (split_array[0] === '_ding_nodelist_widget_rolltab') {
+          if (split_array[0] === 'ding_nodelist_widget_rolltab') {
             nodelist_group = $('.' + split_array[1]).find('.ding-tabroll').find('.ding-tabroll');
           }
-          else if (split_array[0] === '_ding_nodelist_widget_minimal_display') {
+          else if (split_array[0] === 'ding_nodelist_widget_minimal_display') {
             nodelist_group = $('.' + split_array[1]).find('.minimal-item');
           }
-          else if (split_array[0] === '_ding_nodelist_widget_promoted_nodes') {
+          else if (split_array[0] === 'ding_nodelist_widget_promoted_nodes') {
             nodelist_group = $('.' + split_array[1]).find('.ding_nodelist-pn-item');
           }
-          else if (split_array[0] === '_ding_nodelist_widget_carousel') {
+          else if (split_array[0] === 'ding_nodelist_widget_carousel') {
             nodelist_group = $('.' + split_array[1]).find('.ding_nodelist-items .slick-list .slick-track').children().once();
           }
           else {
