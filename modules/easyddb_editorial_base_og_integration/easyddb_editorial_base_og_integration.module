@@ -194,7 +194,9 @@ function easyddb_editorial_base_og_integration_auto_create_og_submit(&$form, &$f
 function easyddb_editorial_base_og_integration_taxonomy_term_delete($term) {
   if ($term->vocabulary_machine_name == 'editorial_base') {
     $field = field_get_items('taxonomy_term', $term, 'og_group_ref_eb');
-    if (!empty($field)) {
+    $eb_autocreate = $term->field_eb_autocreate_og[LANGUAGE_NONE][0]['value'];
+    // Delete EB OG node only if it was created by current term.
+    if (!empty($eb_autocreate)) {
       $tid = $field[0]['target_id'];
       // Delete "Editorial base OG" node assigned to this term.
       node_delete($tid);
