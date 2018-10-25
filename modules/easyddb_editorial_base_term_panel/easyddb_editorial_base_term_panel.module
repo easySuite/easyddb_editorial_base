@@ -149,3 +149,17 @@ function easyddb_editorial_base_term_panel_form_taxonomy_form_term_alter(&$form,
     unset($form['field_term_page']);
   }
 }
+
+/**
+ * Implements hook_taxonomy_term_delete().
+ */
+function easyddb_editorial_base_term_panel_taxonomy_term_delete($term) {
+  if ($term->vocabulary_machine_name == 'editorial_base' && $term->field_term_page[LANGUAGE_NONE][0]['value'] == 1) {
+    $tid = $term->tid;
+    $task = page_manager_get_task('term_view');
+    $handlers = page_manager_load_task_handlers($task, '');
+    if (!empty($handlers['term_view_panel_context_tid_' . $tid])) {
+      page_manager_delete_task_handler($handlers['term_view_panel_context_tid_' . $tid]);
+    }
+  }
+}
