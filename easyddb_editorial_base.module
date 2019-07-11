@@ -68,20 +68,22 @@ function easyddb_editorial_base_section_list_content_type_render($subtype, $conf
   $block = new stdClass();
   $block->content = '';
 
-  $term = entity_metadata_wrapper('taxonomy_term', reset($panel_args));
-  if (!$term) {
-    return $block;
+  if (!empty($panel_args)) {
+    $term = entity_metadata_wrapper('taxonomy_term', reset($panel_args));
+    if (!$term) {
+      return $block;
+    }
+
+    $img_content = $term->field_eb_section_content_image->value();
+    $image = ($img_content)
+      ? image_style_url('editorial_base_content_image', $img_content['uri'])
+      : NULL;
+
+    $block->content = theme('editorial_base_term_widget', [
+      'description' => $term->field_eb_section_summary_text->value(),
+      'image' => $image,
+    ]);
   }
-
-  $img_content = $term->field_eb_section_content_image->value();
-  $image = ($img_content)
-    ? image_style_url('editorial_base_content_image', $img_content['uri'])
-    : NULL;
-
-  $block->content = theme('editorial_base_term_widget', array(
-    'description' => $term->field_eb_section_summary_text->value(),
-    'image' => $image,
-  ));
 
   return $block;
 }
